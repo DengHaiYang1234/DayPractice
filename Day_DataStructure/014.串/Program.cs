@@ -12,11 +12,11 @@ namespace project
 		{
 			string a = "1a1sdas";
 			string b = "as";
-			Console.WriteLine(a.IndexOf(b));
+			Console.WriteLine(a.Remove(3,2));
 
 			StringDS c = new StringDS("1a1sdas");
-			StringDS d = new StringDS("as");
-			Console.WriteLine(c.IndexOf( d));
+			//StringDS d = new StringDS("as");
+			Console.WriteLine(c.Remove(3,2));
 		}
 	}
 }

@@ -197,7 +197,46 @@ namespace project
 			return index;
 
 		}
-
 		
+		public StringDS Remove(int startIndex)
+		{
+			int count = this.Count;
+			char[] newStr = new char[startIndex];
+
+			for(int i = 0; i < startIndex;i++)
+			{
+				newStr[i] = this[i];
+			}
+
+			return new StringDS(newStr);
+		}
+
+		public StringDS Remove(int startIndex,int count)
+		{
+			int size = this.Count - count;
+			char[] newStr = new char[size];
+			
+			for(int i = 0;i < startIndex;i++)
+			{
+				newStr[i] = this[i];
+			}
+
+			int endIndex = startIndex + count;
+
+			for (int i = endIndex; i < this.Count;i++)
+			{
+				newStr[i - count] = arr[i];
+			}
+
+			return new StringDS(newStr);
+
+		}
+
+
+		public override string ToString()
+		{
+			return new string(arr);
+		}
+
 	}
 }
