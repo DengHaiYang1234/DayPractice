@@ -232,6 +232,78 @@ namespace project
 
 		}
 
+		public StringDS[] Split(char separator)
+		{
+			int size = 0;
+			int[] ts = new int[0];
+			for (int i = 0; i < this.Count; i++)
+			{
+				if (this[i].Equals(separator))
+				{
+					size += 1;
+
+					int[] _ts = new int[size];
+
+					if (size == 1)
+					{
+						_ts[0] = i;
+
+					}
+					else
+					{
+						for (int index = 0; index < ts.Length; i++)
+						{
+							_ts[index] = ts[index];
+						}
+						_ts[_ts.Length - 1] = i;
+					}
+
+					ts = _ts;
+				}
+			}
+			Console.WriteLine("ts.Length  ts.Length:" + ts.Length);
+
+			StringDS[] ss = new StringDS[ts.Length + 1];
+
+			for (int i = 0; i < ts.Length; i++)
+			{
+				int leftIndex;
+				int rightIndex;
+				int newSize;
+				if(i == 0)
+				{
+					leftIndex = 0;
+					rightIndex = ts[i];
+					newSize = ts[i];
+				}
+				else
+				{
+					leftIndex = ts[i - 1] + 1;
+					rightIndex = ts[i];
+					newSize = rightIndex - leftIndex - 1;
+				}
+
+				char[] newChar = new char[newSize];
+				for (int j = leftIndex; j < rightIndex; j++)
+				{
+					newChar[j - leftIndex] = arr[j];
+				}
+
+				ss[i] = new StringDS(newChar);
+			}
+
+			char[] newChar1 = new char[this.Count - ts[ts.Length - 1]];
+			int startIndex = ts[ts.Length - 1] + 1;
+			for (int i = startIndex; i < this.Count;i++)
+			{
+				newChar1[i - startIndex] = this[i];
+			}
+
+			ss[ss.Length - 1] = new StringDS(newChar1);
+
+			return ss;
+		}
+
 
 		public override string ToString()
 		{
