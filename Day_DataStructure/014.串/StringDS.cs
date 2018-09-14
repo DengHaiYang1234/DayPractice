@@ -10,7 +10,6 @@ namespace project
 	{
 		char[] arr;
 
-
 		public StringDS(string str)
 		{
 			arr = new char[str.Length];
@@ -34,7 +33,6 @@ namespace project
 			arr = new char[size];
 		}
 
-
 		public char this[int index]
 		{
 			get
@@ -42,9 +40,14 @@ namespace project
 				return arr[index];
 			}
 		}
-
+		/// <summary>
+		/// 长度
+		/// </summary>
+		/// <returns></returns>
 		public int Length() => arr.Length;
-
+		/// <summary>
+		/// 长度
+		/// </summary>
 		public int Count
 		{
 			get
@@ -52,7 +55,6 @@ namespace project
 				return arr.Length;
 			}
 		}
-
 
 		/// <summary>
 		/// 小于0.strA < strB  -1
@@ -105,7 +107,6 @@ namespace project
 
 		//	return result;
 		//}
-
 		public static int Compare(StringDS strA, StringDS strB)
 		{
 			int index = -1;
@@ -151,10 +152,18 @@ namespace project
 			}
 			return result;
 		}
-
-
+		/// <summary>
+		/// B字符串是否包含在A字符串
+		/// </summary>
+		/// <param name="strA"></param>
+		/// <param name="strB"></param>
+		/// <returns></returns>
 		public static bool Equals(StringDS strA, StringDS strB) => (Compare(strA, strB) == 1);
-
+		/// <summary>
+		/// 匹配字符串 返回第一个位置的索引
+		/// </summary>
+		/// <param name="str"></param>
+		/// <returns></returns>
 		public int IndexOf(StringDS str)
 		{
 			int thisLen = this.Count;
@@ -197,7 +206,11 @@ namespace project
 			return index;
 
 		}
-		
+		/// <summary>
+		/// 删除字符串
+		/// </summary>
+		/// <param name="startIndex"></param>
+		/// <returns></returns>
 		public StringDS Remove(int startIndex)
 		{
 			int count = this.Count;
@@ -210,7 +223,12 @@ namespace project
 
 			return new StringDS(newStr);
 		}
-
+		/// <summary>
+		/// 删除字符串 + count
+		/// </summary>
+		/// <param name="startIndex"></param>
+		/// <param name="count"></param>
+		/// <returns></returns>
 		public StringDS Remove(int startIndex,int count)
 		{
 			int size = this.Count - count;
@@ -231,9 +249,17 @@ namespace project
 			return new StringDS(newStr);
 
 		}
-
+		/// <summary>
+		/// 分隔字符串
+		/// 1.先获取所有的分隔索引
+		/// 2.第一个，中间位置，末尾分三步求得元素
+		/// </summary>
+		/// <param name="separator"></param>
+		/// <returns></returns>
 		public StringDS[] Split(char separator)
 		{
+
+			//存储所有分隔的索引
 			int size = 0;
 			int[] ts = new int[0];
 			for (int i = 0; i < this.Count; i++)
@@ -251,7 +277,7 @@ namespace project
 					}
 					else
 					{
-						for (int index = 0; index < ts.Length; i++)
+						for (int index = 0; index < ts.Length; index++)
 						{
 							_ts[index] = ts[index];
 						}
@@ -261,8 +287,8 @@ namespace project
 					ts = _ts;
 				}
 			}
-			Console.WriteLine("ts.Length  ts.Length:" + ts.Length);
-
+			
+			//分隔后的数组部分
 			StringDS[] ss = new StringDS[ts.Length + 1];
 
 			for (int i = 0; i < ts.Length; i++)
@@ -270,17 +296,22 @@ namespace project
 				int leftIndex;
 				int rightIndex;
 				int newSize;
+				//第一个分隔索引
 				if(i == 0)
 				{
 					leftIndex = 0;
 					rightIndex = ts[i];
 					newSize = ts[i];
 				}
+				//除去第一个和最后一个的索引
 				else
 				{
+					//分隔索引前的数组元素
 					leftIndex = ts[i - 1] + 1;
+					//当前分隔索引位置
 					rightIndex = ts[i];
-					newSize = rightIndex - leftIndex - 1;
+					//当前数组的长度
+					newSize = rightIndex - leftIndex ;
 				}
 
 				char[] newChar = new char[newSize];
@@ -292,7 +323,15 @@ namespace project
 				ss[i] = new StringDS(newChar);
 			}
 
-			char[] newChar1 = new char[this.Count - ts[ts.Length - 1]];
+			//最后一个分隔索引后的元素
+
+			//最后一个分隔索引
+			int lastIndex = ts[ts.Length - 1];
+			//最后分隔索引后的元素个数
+			int lastItemSize = this.Count - lastIndex;
+
+			char[] newChar1 = new char[lastItemSize];
+			//从最后一个索引位置开始寻找
 			int startIndex = ts[ts.Length - 1] + 1;
 			for (int i = startIndex; i < this.Count;i++)
 			{
@@ -303,7 +342,42 @@ namespace project
 
 			return ss;
 		}
+		/// <summary>
+		/// 截取字符串
+		/// </summary>
+		/// <param name="startIndex"></param>
+		/// <returns></returns>
+		public StringDS Substring(int startIndex)
+		{
+			int count = this.Count - startIndex;
+			char[] newChar = new char[count];
 
+			for (int i = startIndex; i < this.Count;i++)
+			{
+				newChar[i - startIndex] = this[i];
+			}
+
+			return new StringDS(newChar);
+		}
+		/// <summary>
+		/// 截取字符串 + 长度
+		/// </summary>
+		/// <param name="startIndex"></param>
+		/// <param name="length"></param>
+		/// <returns></returns>
+		public StringDS Substring(int startIndex,int length)
+		{
+			int count = length;
+
+			char[] newChar = new char[count];
+
+			for (int i = startIndex; i < startIndex + length; i++)
+			{
+				newChar[i - startIndex] = this[i];
+			}
+
+			return new StringDS(newChar);
+		}
 
 		public override string ToString()
 		{
