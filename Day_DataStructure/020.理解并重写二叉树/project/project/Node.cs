@@ -20,5 +20,12 @@ namespace project
             Left = null;
             Right = null;
         }
+
+        public Node()
+        {
+            Data = 0;
+            Left = null;
+            Right = null;
+        }
     }
 }

@@ -39,7 +39,6 @@ namespace project
             Console.WriteLine("Find:" + bst.Find(33).Data);
             bst.Insert(22);
             bst.Insert(23);
-            bst.Insert(1);
             Console.WriteLine("中序:\n");
             bst.InOrder(bst.root);
 
@@ -50,6 +49,15 @@ namespace project
             //bst.LevelTraverse(bst.root);
 
             Console.WriteLine("求第3层的节点总数：" + bst.GetNodeNumKthLevel(bst.root,3));
+            int height = 0;
+            Console.WriteLine("是否是平衡二叉树：" + bst.IsAVL(bst.root,out height));
+            Console.WriteLine("是否是平衡二叉树Height：" +  height);
+
+            //bst.Mirror(bst.root); //镜像二叉树
+
+            bst.Convert(bst.root, bst.Find(1), bst.Find(100));
+
+            Console.ReadKey();
         }
     }
 }

@@ -193,7 +193,125 @@ namespace project
             return (numLeft + numRight);
         }
 
+        /// <summary>
+        /// 判断两颗二叉树是否结构相同
+        /// </summary>
+        /// <param name="theRoot1"></param>
+        /// <param name="theRoot2"></param>
+        /// <returns></returns>
+        public static bool StructureCmp(Node<T> theRoot1,Node<T> theRoot2)
+        {
+            if (theRoot1 == null && theRoot2 == null)
+                return true;
+            else if (theRoot1 == null || theRoot2 == null)
+                return false;
+            bool resultLeft = StructureCmp(theRoot1.Left, theRoot2.Left);
+            bool resultRight = StructureCmp(theRoot1.Right, theRoot2.Right);
+            return (resultLeft && resultRight);
+        }
 
+        /// <summary>
+        /// 判断二叉树是不是平衡二叉树
+        /// （1）如果二叉树为空，返回真
+        /// （2）如果二叉树不为空，如果左子树和右子树都是AVL树并且左子树和右子树高度相差不大于1，返回真，其他返回假
+        /// </summary>
+        /// <param name="theRoot"></param>
+        /// <param name="height"></param>
+        /// <returns></returns>
+        public bool IsAVL(Node<T> theRoot,out int height)
+        {
+            if(theRoot == null)
+            {
+                height = 0;
+                return true;
+            }
+            int heightLeft;
+            bool resultLeft = IsAVL(theRoot.Left, out heightLeft);
+            int heightRight;
+            bool resultRight = IsAVL(theRoot.Right, out heightRight);
+            if(resultLeft && resultRight && Math.Abs(heightLeft - heightRight) <= 1)// 左子树和右子树都是AVL，并且高度相差不大于1，返回真
+            {
+                height = Math.Max(heightLeft, heightRight) + 1;
+                return true;
+            }
+            else
+            {
+                height = Math.Max(heightLeft, heightRight) + 1;
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 求二叉树的镜像
+        /// </summary>
+        /// <param name="theRoot"></param>
+        /// <returns></returns>
+        public Node<T> Mirror(Node<T> theRoot)
+        {
+            if (theRoot == null)
+                return null;
+            Node<T> pLeft = Mirror(theRoot.Left);
+            Node<T> pRight = Mirror(theRoot.Right);
+
+            theRoot.Left = pRight;
+            theRoot.Right = pLeft;
+            return theRoot;
+        }
+
+        /// <summary>
+        /// 将二叉查找树变为有序的双向链表
+        /// </summary>
+        /// <param name="theRoot"></param>
+        /// <param name="pFirstNode"></param>
+        /// <param name="pLastNode"></param>
+        /// 如果左子树为空，对应双向有序链表的第一个节点是根节点，左边不需要其他操作；
+        /// 如果左子树不为空，转换左子树，二叉查找树对应双向有序链表的第一个节点就是左子树转换后双向有序链表的第一个节点，同时将根节点和左子树转换后的双向有序链 表的最后一个节点连接；
+        /// 如果右子树为空，对应双向有序链表的最后一个节点是根节点，右边不需要其他操作；
+        /// 如果右子树不为空，对应双向有序链表的最后一个节点就是右子树转换后双向有序链表的最后一个节点，同时将根节点和右子树转换后的双向有序链表的第一个节点连 接。
+        public void Convert(Node<T> theRoot,Node<T> pFirstNode,Node<T> pLastNode)
+        {
+            Node<T> pFirstLeft = new Node<T>();
+            Node<T> pLastLeft = new Node<T>();
+            Node<T> pFirstRight = new Node<T>();
+            Node<T> pLastRight = new Node<T>();
+            if (theRoot == null)
+            {
+                pFirstNode = null;
+                pLastNode = null;
+                return;
+            }
+            if(theRoot.Left == null)
+            {
+                // 如果左子树为空，对应双向有序链表的第一个节点是根节点
+                pFirstNode = theRoot;
+            }
+            else
+            {
+                Convert(theRoot.Left, pFirstLeft, pLastLeft);
+                // 二叉查找树对应双向有序链表的第一个节点就是左子树转换后双向有序链表的第一个节点
+                pFirstNode = pFirstLeft;
+                // 将根节点和左子树转换后的双向有序链表的最后一个节点连接
+                theRoot.Left = pLastLeft;
+                pLastLeft.Right = theRoot;
+            }
+
+            if(theRoot.Right == null)
+            {
+                // 对应双向有序链表的最后一个节点是根节点
+                pLastNode = theRoot;
+            }
+            else
+            {
+                Convert(theRoot.Right, pFirstRight, pLastRight);
+                // 对应双向有序链表的最后一个节点就是右子树转换后双向有序链表的最后一个节点
+                pLastNode = pLastRight;
+                // 将根节点和右子树转换后的双向有序链表的第一个节点连接
+                theRoot.Right = pFirstRight;
+                pFirstRight.Left = theRoot;
+            }
+
+
+        }
 
     }
 }
