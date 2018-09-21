@@ -17,8 +17,6 @@ namespace project
         public Node(int x)
         {
             Data = x;
-            Left = null;
-            Right = null;
         }
 
         public Node()

@@ -108,10 +108,12 @@ namespace project
                     break;
                 if(key < current.Data)
                 {
+                    parent = current;
                     current = current.Left;
                 }
                 else
                 {
+                    parent = current;
                     current = current.Right;
                 }
             }
@@ -311,6 +313,176 @@ namespace project
             }
 
 
+        }
+
+        public void treeToDoublyList(Node<T> p,Node<T> prev,Node<T> head)
+        {
+            if (p == null)
+                return;
+            treeToDoublyList(p.Left, prev, head);
+            p.Left = prev;
+            if (prev != null)
+                prev.Right = p;
+            else
+                head = p;
+
+            Node<T> right = p.Right;
+            p.Right = head;
+            head.Left = p;
+            prev = p;
+            treeToDoublyList(right, prev, head);            
+
+        }
+        public Node<T> treeToDoublyList(Node<T> theRoot)
+        {
+            Node<T> head = null;
+            Node<T> pre = null;
+            treeToDoublyList(theRoot, pre, head);
+            return head;
+        }
+        /// <summary>
+        /// *  递归实现将二叉查找树变为有序的双向链表,要求不能创建新节点，只调整指针(以根节点作为头结点)
+        /// </summary>
+        /// <param name="root"></param>
+        /// <returns></returns>
+        ///（1）如果一个节点是空树或者节点不存在左子树和右子树，则返回该节点
+        ///（2）定义临时变量，用来接收递归出口得到的结果
+        ///（3）如果返回的是左子树的左节点，中序遍历找到临时节点的最右边的节点，然后让临时变量的节点的右孩子指向树根，树根的左孩子指向临时节点
+        ///（4）如果返回的是右子树的右节点，中序遍历找到临时节点的最左边的节点，然后让临时变量的节点的左孩子指向树根，树根的右孩子指向临时节点
+        ///（5）这样完成二叉查找树变为有序的双向链表
+        public static Node<T> convertBalanceTreeToDoubleListRecursion(Node<T> root)
+        {
+            if (root == null || (root.Left == null && root.Right == null))
+                return root;
+            Node<T> temp = null;
+            if(root.Left != null)
+            {
+                temp = convertBalanceTreeToDoubleListRecursion(root.Left);
+                while(temp.Right != null)
+                {
+                    temp = temp.Right;
+                }
+                temp.Right = root;
+                root.Left = temp;
+            }
+            if(root.Right != null)
+            {
+                temp = convertBalanceTreeToDoubleListRecursion(root.Right);
+                while (temp.Left != null)
+                    temp = temp.Left;
+
+                temp.Left = root;
+                root.Right = temp;
+            }
+
+            return root;
+        }
+
+        /// <summary>
+        /// 非递归变成链表
+        /// </summary>
+        /// <param name="root"></param>
+        /// <returns></returns>
+        public static Node<T> convertBalanceTreeToDoubleList(Node<T> root)
+        {
+            if (root == null)
+                return null;
+            Node<T> head = null;
+            Node<T> current = root;
+            Node<T> preTreeNode = null;
+            Stack<Node<T>> statck = new Stack<Node<T>>();
+            while(statck.Count != 0 || current != null)
+            {
+                while (current != null)
+                {
+                    statck.Push(current);
+                    current = current.Left;
+                }
+                if(statck.Count != 0)
+                {
+                    current = statck.Pop();
+                    if (head == null)
+                        head = current;
+                    if (preTreeNode != null)
+                        preTreeNode.Right = current;
+
+                    preTreeNode = current;
+                    current = current.Right;
+                }
+            }
+            return head;
+        }
+
+        public void Delete(int key)
+        {
+            // 1. leaf node
+            Node<T> target = Find(key);
+            if(target != null && target != root)
+            {
+                if(current.Left == null && current.Right == null)
+                {
+                    if (parent.Left == current)
+                        parent.Left = null;
+                    else
+                        parent.Right = null;
+                }
+                // 2. have one node
+                else if (current.Left == null && current.Right != null)
+                {
+                    if (parent.Right == current)
+                        parent.Right = current.Right;
+                    else
+                        parent.Left = current.Right;
+                }
+                else if(current.Left != null && current.Right == null)
+                {
+                    if (parent.Right == current)
+                        parent.Right = current.Left;
+                    else
+                        parent.Left = current.Left;
+                }
+                // 3. have two node
+                else
+                {
+                    Node<T> soccessor = current.Right;//后继节点
+                    Node<T> soccessorParent = current;//后继节点的父节点
+                    while(soccessor.Left != null)
+                    {
+                        soccessorParent = soccessor;
+                        soccessor = soccessor.Left;
+                    }
+                    if(current == parent.Left)
+                    {
+                        parent.Left = soccessor;
+                        soccessor.Left = current.Left;
+                        if (current == soccessorParent)//判断要删除点是否为后继点的父节点
+                            current.Right = null;
+                        else
+                        {
+                            soccessor.Right = current.Right;
+                            soccessorParent.Left = null;
+                        }
+                    }
+                    //3.2 要删除点是其父节点的右节点
+                    else if(current == parent.Right)
+                    {
+                        parent.Right = soccessor;
+                        soccessor.Left = current.Left;
+                        if (current == soccessorParent)
+                            current.Right = null;
+                        else
+                        {
+                            soccessor.Right = current.Right;
+                            soccessorParent.Left = null;
+                        }
+                    }
+                }
+            }
+            //如果要删除点是根节点，直接删除整棵树
+            else if(target == root)
+            {
+                root = null;
+            }
         }
 
     }
