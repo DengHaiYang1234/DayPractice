@@ -18,8 +18,8 @@ namespace project
 
             //Console.Write("16进制【0x2A】转2、8、10进制结果：{0},{1},{2}\n", Convert.ToString(i16, 2), Convert.ToString(i16, 8), Convert.ToString(i16, 10));
 
-            int a = 10;
-            int b = 20;
+            //int a = 10;
+            //int b = 20;
             //Swap(ref a,ref b);
 
             //Console.WriteLine(4 | 8); //除了0|0结果是0外，其它运算结果的都是1
