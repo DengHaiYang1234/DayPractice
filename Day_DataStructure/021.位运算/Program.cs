@@ -27,6 +27,16 @@ namespace project
             //Console.WriteLine(4 & 8);//除了1&1结果是1外，其它运算结果的都是0
 
 
+            //int a = 4;
+            //int b = 8;
+
+            //Console.WriteLine(4 ^ 8);
+
+            //string i10a = Convert.ToString(a, 2);
+            //string i10b = Convert.ToString(b, 2);
+
+            Console.WriteLine(302 / 2 );
+            Console.WriteLine(302 % 2);
         }
 
         static void Swap(ref int a,ref int b)
