@@ -141,6 +141,71 @@ namespace project
         {
             return new string(arr);
         }
+
+
+        public StringDS Remove(int startIndex)
+        {
+            char[] newChar = new char[startIndex];
+            for(int i = 0; i < startIndex;i++)
+            {
+                newChar[i] = arr[i];
+            }
+
+            arr = newChar;
+            return new StringDS(arr);
+        }
+
+        public StringDS Remove(int startIndex, int Count)
+        {
+            if (startIndex + Count > arr.Length)
+            {
+                Console.WriteLine("错误");
+                return null;
+            }
+            char[] newChar1 = new char[arr.Length - Count];
+
+            for (int i = 0; i < startIndex; i++)
+            {
+                newChar1[i] = arr[i];
+            }
+
+            int index = startIndex + Count;
+            for (int i = index; i < arr.Length;i++)
+            {
+                newChar1[i - index + startIndex] = arr[i];
+            }
+
+            arr = newChar1;
+
+            return new StringDS(arr);
+        }
+
+        public StringDS SubString(int startIndex)
+        {
+            char[] newChar = new char[Count - startIndex];
+            for(int i = startIndex;i < Count;i++)
+            {
+                newChar[i - startIndex] = arr[i];
+            }
+
+            arr = newChar;
+            return new StringDS(arr);
+        }
+
+        public StringDS SubString(int startIndex,int count)
+        {
+            char[] newChar = new char[count];
+
+            for(int i = startIndex;i < startIndex + count;i++)
+            {
+                newChar[i - startIndex] = arr[i];
+            }
+
+            arr = newChar;
+            return new StringDS(arr);
+        }
+            
+
     }
 
     
