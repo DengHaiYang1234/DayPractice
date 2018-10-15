@@ -192,11 +192,11 @@ namespace project
             return new StringDS(arr);
         }
 
-        public StringDS SubString(int startIndex,int count)
+        public StringDS SubString(int startIndex, int count)
         {
             char[] newChar = new char[count];
 
-            for(int i = startIndex;i < startIndex + count;i++)
+            for (int i = startIndex; i < startIndex + count; i++)
             {
                 newChar[i - startIndex] = arr[i];
             }
@@ -204,7 +204,79 @@ namespace project
             arr = newChar;
             return new StringDS(arr);
         }
+
             
+        public StringDS[] Split(char sign)
+        {
+            int haveSignNum = 0;
+            int[] indexList = new int[haveSignNum];
+            for (int i = 0; i< Count;i++)
+            {
+                if(arr[i].Equals(sign))
+                {
+                    haveSignNum += 1;
+
+                    int[] newList = new int[haveSignNum];
+
+                    for (int j = 0; j < indexList.Length; j++)
+                    {
+                        newList[j] = indexList[j];
+                    }
+
+                    newList[haveSignNum - 1] = i;
+
+                    indexList = newList;
+                }
+            }
+
+            StringDS[] splitList = new StringDS[indexList.Length + 1];
+            int splitIndex = 0;
+
+            if (indexList.Length > 0)
+            {
+                //第一个位置的索引
+                int len_firstIndex = indexList[0];
+                SetData(splitList, 0, len_firstIndex, len_firstIndex,splitIndex);
+
+                //中间部位
+                if (indexList.Length > 1)
+                {
+                    for(int i = 1; i < indexList.Length; i++)
+                    {
+                        int len_midIndex = indexList[i];
+                        int splitCount = len_midIndex - indexList[splitIndex];
+                        int count = splitCount - 1;
+                        int startIndex = indexList[splitIndex] + 1;
+                        splitIndex++;
+                        SetData(splitList, startIndex, len_midIndex, count, splitIndex);
+                    }
+                }
+
+                //最后的位置
+                int len_endIndex = indexList[indexList.Length - 1];
+                int endCount = Count - len_endIndex;
+                int _startIndex = len_endIndex + 1;
+                splitIndex++;
+                SetData(splitList, _startIndex, Count, endCount, splitIndex);
+            }
+
+
+            return splitList;
+
+        }
+
+
+        public void SetData(StringDS[] sts,int startIndex,int endIndex,int newCharCount,int splitIndex)
+        {
+            char[] newChar = new char[newCharCount];
+
+            for (int i = startIndex; i < endIndex; i++)
+            {
+                newChar[i - startIndex] = arr[i];
+            }
+
+            sts[splitIndex] = new StringDS(newChar);
+        }
 
     }
 
