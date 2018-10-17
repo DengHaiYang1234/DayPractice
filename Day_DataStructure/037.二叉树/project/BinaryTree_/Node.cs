@@ -4,22 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace project
+namespace BinaryTree_
 {
     public class Node
     {
-        public string Data { get; set; }
+        public int Data { get; set; }
         public Node Left { get; set; }
         public Node Right { get; set; }
 
 
-        public Node()
-        {
-            
-        }
-
-
-        public Node(string value)
+        public Node(int value)
         {
             Data = value;
             Left = null;

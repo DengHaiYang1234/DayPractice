@@ -8,28 +8,28 @@ namespace project
 {
     public class TwoForkedTree
     {
-        Node tree;
+        Node_ tree;
 
         public TwoForkedTree()
         {
-            tree = new Node("A");
+            tree = new Node_("A");
         }
 
-        public Node CreatFakeTree()
+        public Node_ CreatFakeTree()
         {
-            tree.Left = new Node()
+            tree.Left = new Node_()
             {
                 Data = "B",
-                Left = new Node() { Data = "D", Left = new Node() { Data = "G" } },
-                Right = new Node() { Data = "E", Right = new Node() { Data = "H" } }
+                Left = new Node_() { Data = "D", Left = new Node_() { Data = "G" } },
+                Right = new Node_() { Data = "E", Right = new Node_() { Data = "H" } }
             };
 
-            tree.Right = new Node() { Data = "C", Right = new Node() { Data = "F" } };
+            tree.Right = new Node_() { Data = "C", Right = new Node_() { Data = "F" } };
             return tree;
         }
 
         //先序遍历可用作与目录结构的显示
-        public void ProSort(Node tree)
+        public void ProSort(Node_ tree)
         {
             if (tree == null)
                 return;
@@ -38,7 +38,7 @@ namespace project
             ProSort(tree.Right);
         }
         //中序遍历可以用来做表达式树
-        public void MidSort(Node tree)
+        public void MidSort(Node_ tree)
         {
             if (tree == null)
                 return;
@@ -48,7 +48,7 @@ namespace project
         }
 
         //后序遍历可做用于目录大小的计算
-        public void LastSort(Node tree)
+        public void LastSort(Node_ tree)
         {
             if (tree == null)
                 return;
@@ -57,10 +57,10 @@ namespace project
             Console.WriteLine(tree.Data);
         }
 
-        public void ProSortByNoram(Node tree)
+        public void ProSortByNoram(Node_ tree)
         {
-            Stack<Node> stack = new Stack<Node>();
-            Node temp = tree;
+            Stack<Node_> stack = new Stack<Node_>();
+            Node_ temp = tree;
             while(temp != null || stack.Count != 0)
             {
                 //遍历左子树
@@ -81,10 +81,10 @@ namespace project
         }
 
 
-        public void MidSortByNoram(Node tree)
+        public void MidSortByNoram(Node_ tree)
         {
-            Stack<Node> stack = new Stack<Node>();
-            Node temp = tree;
+            Stack<Node_> stack = new Stack<Node_>();
+            Node_ temp = tree;
             while(temp != null || stack.Count != 0)
             {
                 while(temp != null)
@@ -104,11 +104,11 @@ namespace project
 
         //思路：要保证根结点在左孩子和右孩子访问之后才能访问，因此对于任一结点P，先将其入栈。如果P不存在左孩子和右孩子，则可以直接访问它；
         //或者P存 在左孩子或者右孩子，但是其左孩子和右孩子都已被访问过了，则同样可以直接访问该结点。若非上述两种情况，则将P的右孩子和左孩子依次入栈，这样就保证了 每次取栈顶元素的时候，左孩子在右孩子前面被访问，左孩子和右孩子都在根结点前面被访问。
-        public void LastSortByNoram(Node tree)
+        public void LastSortByNoram(Node_ tree)
         {
-            Stack<Node> stack = new Stack<Node>();
-            Node currNode = null;
-            Node preNode = null;
+            Stack<Node_> stack = new Stack<Node_>();
+            Node_ currNode = null;
+            Node_ preNode = null;
             stack.Push(tree);
             while(stack.Count != 0)
             {

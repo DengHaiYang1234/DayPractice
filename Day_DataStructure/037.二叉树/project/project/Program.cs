@@ -11,8 +11,8 @@ namespace project
         static void Main(string[] args)
         {
             TwoForkedTree tree = new TwoForkedTree();
-            Node newTree =  tree.CreatFakeTree();
-            tree.LastSortByNoram(newTree);
+            Node_ newTree = tree.CreatFakeTree();
+            tree.ProSort(newTree);
         }
     }
 }
