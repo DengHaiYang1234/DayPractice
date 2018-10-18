@@ -15,7 +15,7 @@ namespace BinaryTree_
         {
             root = null;
         }
-
+        #region 插入
         public void Insert(int value)
         {
             Node newNode = new Node(value);
@@ -51,6 +51,7 @@ namespace BinaryTree_
                 }
             }
         }
+        #endregion
         #region 递归排序
         public void PreSort(Node root)
         {
@@ -261,7 +262,7 @@ namespace BinaryTree_
             return (numLeft + numRight);
         }
         #endregion
-        #region 层序遍历(画出二叉树)
+        #region 层序遍历(每层节点)
         public void LevelTraverse(Node root)
         {
             Queue<Node> queue = new Queue<Node>();
@@ -315,8 +316,86 @@ namespace BinaryTree_
                     Console.WriteLine("数据：" + _ls[i][j]);
                 }
             }
+        }
+        #endregion
+        #region 判断两颗二叉树是否结构相同
+        public static bool StructureCmp(Node root1,Node root2)
+        {
+            if (root1 == null && root2 == null)
+                return true;
+            else if (root1 == null || root2 == null)
+                return false;
 
+            bool resultLeft = StructureCmp(root1.Left, root2.Left);
+            bool resultRight = StructureCmp(root1.Right, root2.Right);
 
+            return (resultLeft && resultRight);
+        }
+        #endregion
+        #region 二叉树深度
+        public int BinaryTreeDepth(Node root)
+        {
+            if (root == null)
+                return 0;
+
+            int depthLeft = BinaryTreeDepth(root.Left);
+            int depthRight = BinaryTreeDepth(root.Right);
+
+            return depthLeft > depthRight ? (depthLeft + 1) : (depthRight + 1); 
+        }
+        #endregion
+        #region 某层的节点数
+        //每层左节点加有节点的和
+        public int GetLevelNodeNumBy_K(Node root,int k)
+        {
+            if (root == null || k < 1)
+                return 0;
+            else if (k == 1)
+                return 1;
+
+            int leftNum = GetLevelNodeNumBy_K(root.Left, k - 1);
+            int rightNum = GetLevelNodeNumBy_K(root.Right, k - 1);
+            return (leftNum + rightNum);
+        }
+        #endregion
+        #region 是否为平衡二叉树
+        public bool IsAVL(Node root,out int height)
+        {
+            if(root == null)
+            {
+                height = 0;
+                return true;
+            }
+            int heightLeft;
+            bool resultLeft = IsAVL(root.Left, out heightLeft);
+            int heightRight;
+            bool resultRight = IsAVL(root.Right, out heightRight);
+
+            if(resultLeft && resultRight && Math.Abs(heightLeft - heightRight) <= 1)
+            {
+                height = Math.Max(heightLeft, heightRight) + 1;
+                return true;
+            }
+            else
+            {
+                height = Math.Max(heightLeft, heightRight) + 1;
+                return false;
+            }
+        }
+        #endregion
+        #region 二叉树的镜像
+        public Node Mirror(Node root)
+        {
+            if(root == null)
+            {
+                return null;
+            }
+            Node pLeft = Mirror(root.Left);
+            Node pRight = Mirror(root.Right);
+
+            root.Left = pRight;
+            root.Right = pLeft;
+            return root;
         }
         #endregion
     }
