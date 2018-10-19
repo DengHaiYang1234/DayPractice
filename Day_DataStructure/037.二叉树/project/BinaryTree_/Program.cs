@@ -54,9 +54,19 @@ namespace BinaryTree_
 
             //Console.WriteLine("判断两个二叉树是否结构相同：" + BinaryTree.StructureCmp(bst.root,bst.root));
 
-            int height;
-            Console.WriteLine("是否为平衡二叉树：" + bst.IsAVL(bst.root,out height));
-            Console.WriteLine("height：" + height);
+            //int height;
+            //Console.WriteLine("是否为平衡二叉树：" + bst.IsAVL(bst.root,out height));
+            //Console.WriteLine("height：" + height);
+
+
+            Console.WriteLine("------------------------------删除前------------------------------");
+            bst.LevelTraverse(bst.root);
+            bst.Delete(50);
+            Console.WriteLine("------------------------------删除后------------------------------");
+            bst.LevelTraverse(bst.root);
+           
+
+
         }
     }
 }

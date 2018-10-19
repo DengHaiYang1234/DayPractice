@@ -398,5 +398,105 @@ namespace BinaryTree_
             return root;
         }
         #endregion
+        #region 删除
+        public void Delete(int key)
+        {
+            Node currentNode = root;
+            Node parentNode = currentNode;
+            bool isLeftChild = true;
+
+            //删除没有子节点的节点(该节点删除的条件为该节点没有子树.只是一个节点)
+            //找到为key值的节点
+            while (currentNode.Data != key)
+            {
+                parentNode = currentNode;
+                if(key < currentNode.Data)
+                {
+                    isLeftChild = true;
+                    currentNode = currentNode.Left;
+                }
+                else
+                {
+                    isLeftChild = false;
+                    currentNode = currentNode.Right;
+                }
+                if (currentNode == null)
+                {
+                    Console.WriteLine("没有找到该节点");
+                    break;
+                }
+            }
+            //删除有一个子节点的节点
+            if(currentNode.Left == null && currentNode.Right == null)
+            {
+                if (currentNode == root)
+                    root = null;
+                else if (isLeftChild)
+                    parentNode.Left = null;
+                else
+                    parentNode.Right = null;
+            }
+            //如果无右子节点，则直接用该节点的父节点的左节点引用该节点的子节点
+            else if (currentNode.Right == null && currentNode.Left != null)
+            {
+                //头结点
+                if (currentNode == root)
+                    root = currentNode.Left;
+                //若该节点是父节点的左节点
+                else if (isLeftChild)
+                    parentNode.Left = currentNode.Left;
+                //若该节点是父节点的右节点
+                else
+                    parentNode.Right = currentNode.Left;
+            }
+            //如果无左节点，则直接用该节点的父节点右节点引用该节点的子节点
+            else if (currentNode.Left == null && currentNode.Right != null)
+            {
+                //头结点
+                if (currentNode == root)
+                    root = currentNode.Right;
+                //若该节点是父节点的左节点
+                else if (isLeftChild)
+                    parentNode.Left = currentNode.Right;
+                //若该节点是父节点的右节点
+                else
+                    parentNode.Right = currentNode.Right;
+            }
+            //若果存在两个节点
+            else
+            {
+                Node successor = GetSuccessor(currentNode);
+                if (currentNode == root)
+                    root = successor;
+                else if (isLeftChild)
+                    parentNode.Left = successor;
+                else
+                    parentNode.Right = successor;
+                successor.Left = currentNode.Left;
+            }
+        }
+        #endregion
+
+        #region 获取后续节点
+        public Node GetSuccessor(Node delNode)
+        {
+            Node successorParent = delNode;
+            Node successor = delNode;
+            Node current = delNode.Right;
+            while(current != null)
+            {
+                successorParent = successor;
+                successor = current;
+                current = current.Left;
+            }
+            if(successor != delNode.Right)
+            {
+                successorParent.Left = successor.Right;
+                successor.Right = delNode.Right;
+            }
+            return successor;
+        }
+        #endregion
     }
+
 }
