@@ -398,7 +398,7 @@ namespace BinaryTree_
             return root;
         }
         #endregion
-        #region 删除
+        #region 删除 参考：https://blog.csdn.net/cai2016/article/details/52600687
         public void Delete(int key)
         {
             Node currentNode = root;
@@ -476,7 +476,6 @@ namespace BinaryTree_
             }
         }
         #endregion
-
         #region 获取后续节点
         public Node GetSuccessor(Node delNode)
         {
