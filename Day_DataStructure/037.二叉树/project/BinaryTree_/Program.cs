@@ -59,14 +59,17 @@ namespace BinaryTree_
             //Console.WriteLine("height：" + height);
 
 
-            Console.WriteLine("------------------------------删除前------------------------------");
-            bst.LevelTraverse(bst.root);
-            bst.Delete(50);
-            Console.WriteLine("------------------------------删除后------------------------------");
-            bst.LevelTraverse(bst.root);
-           
+            //Console.WriteLine("------------------------------删除前------------------------------");
+            //bst.LevelTraverse(bst.root);
+            //bst.DeleteNode(50);
+            //Console.WriteLine("------------------------------删除后------------------------------");
+            //bst.LevelTraverse(bst.root);
 
 
+            Console.WriteLine("------------------------------双向链表------------------------------");
+            bst.LevelTraverse(bst.root);
+            Node head =  BinaryTree.ConvertBalanceTreeToDoubleListRecursion(bst.root);
+            
         }
     }
 }

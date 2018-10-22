@@ -496,6 +496,134 @@ namespace BinaryTree_
             return successor;
         }
         #endregion
-    }
+        #region 同样是删除
+        public void DeleteNode(int key)
+        {
+            Node currentNode = root;
+            Node parentNode = null;
 
+            while (currentNode.Data != key)
+            {
+                parentNode = currentNode;
+                if (key < currentNode.Data)
+                {
+                    currentNode = currentNode.Left;
+                }
+                else
+                {
+                    currentNode = currentNode.Right;
+                }
+
+                if (currentNode == null)
+                {
+                    Console.WriteLine("没有找到该节点");
+                    break;
+                }
+            }
+
+            if (currentNode.Left == null && currentNode.Right == null)
+            {
+                if (currentNode == root)
+                    root = null;
+                else if (parentNode.Left == currentNode)
+                    parentNode.Left = null;
+                else if (parentNode.Right == currentNode)
+                    parentNode.Right = null;
+            }
+            else if (currentNode.Left == null && currentNode.Right != null)
+            {
+                if (currentNode == root)
+                {
+                    root = currentNode.Right;
+                }
+                else if (parentNode.Left == currentNode)
+                    parentNode.Left = currentNode.Right;
+                else if (parentNode.Right == currentNode)
+                    parentNode.Right = currentNode.Right;
+            }
+            else if (currentNode.Right == null && currentNode.Left != null)
+            {
+                if (currentNode == root)
+                    root = currentNode.Left;
+                else if (parentNode.Left == currentNode)
+                    parentNode.Left = currentNode.Left;
+                else if (parentNode.Right == currentNode)
+                    parentNode.Right = currentNode.Left;
+            }
+            else
+            {
+                Node successor = GetSuccessor(currentNode);
+                if (currentNode == root)
+                    root = successor;
+                else if (parentNode.Left == currentNode)
+                    parentNode.Left = successor;
+                else
+                    parentNode.Right = successor;
+
+                successor.Left = currentNode.Left;
+            }
+        }
+        #endregion
+        #region  将二叉树转换为双向链表(非递归利用中序)
+        public static Node ConvertBalanceTreeDoubleList(Node root)
+        {
+            if (root == null)
+                return null;
+            Node head = null;
+            Node current = root;
+            Node preTreeNode = null;
+            Stack<Node> stack = new Stack<Node>();
+            while(stack.Count != 0 || current != null)
+            {
+                while(current != null)
+                {
+                    stack.Push(current);
+                    current = current.Left;
+                }
+                if(stack.Count != 0)
+                {
+                    current = stack.Pop();
+                    if(head == null)
+                    {
+                        head = current;
+                    }
+                    if(preTreeNode != null)
+                    {
+                        preTreeNode.Right = current;
+                    }
+
+                    preTreeNode = current;
+                    current = current.Right;
+                }
+            }
+            return head;
+        }
+        #endregion
+        #region  将二叉树转换为双向链表(递归利用中序)
+        public static Node ConvertBalanceTreeToDoubleListRecursion(Node root)
+        {
+            if (root == null || (root.Left == null && root.Right == null))
+                return root;
+            Node temp = null;
+            if(root.Left != null)
+            {
+                temp = ConvertBalanceTreeToDoubleListRecursion(root.Left); // root为弹出的上一层。
+                while (temp.Right != null) // 若该节点存在右节点。那么连接该节点便是
+                    temp = temp.Right;
+                temp.Right = root;
+                root.Left = temp;
+            }
+            if(root.Right != null)
+            {
+                temp = ConvertBalanceTreeToDoubleListRecursion(root.Right);
+                while (temp.Left != null)
+                    temp = temp.Left;
+                temp.Left = root;
+                root.Right = temp;
+            }
+            return root;
+        }
+       
+        #endregion
+    }
 }
