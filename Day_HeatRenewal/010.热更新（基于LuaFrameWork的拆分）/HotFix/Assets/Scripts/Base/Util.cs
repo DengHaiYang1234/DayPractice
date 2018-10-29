@@ -57,6 +57,47 @@ namespace HotFix
             }
         }
 
+        public static string AppContentPath()
+        {
+            string path = string.Empty;
+            switch (Application.platform)
+            {
+                case RuntimePlatform.Android:
+                    path = "jar:file://" + Application.dataPath + "!/assets/";
+                    break;
+                case RuntimePlatform.IPhonePlayer:
+                    path = Application.dataPath + "/Raw/";
+                    break;
+                default:
+                    path = Application.dataPath + "/StreamingAssets/";
+                    break;
+            }
+
+            return path;
+        }
+
+        public static object[] CallMethod(string module, string func, params object[] args)
+        {
+            LuaManager luaMgr = AppFacade.Instance.GetManager<LuaManager>(ManagersName.lua);
+            if (luaMgr == null)
+                return null;
+            return luaMgr.CallFunction(TrimPath(module) + "." + func);
+        }
+
+        public static string TrimPath(string origName)
+        {
+            string fileName = origName;
+            if (fileName.IndexOf('/') != -1)
+            {
+                fileName = fileName.Substring(fileName.LastIndexOf('/') + 1);
+            }
+
+            if (fileName.IndexOf('.') != -1)
+                return fileName.Substring(0, fileName.LastIndexOf('.'));
+
+            return fileName;
+        }
+
     }
 
 

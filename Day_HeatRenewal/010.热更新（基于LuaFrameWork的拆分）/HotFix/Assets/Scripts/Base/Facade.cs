@@ -16,7 +16,7 @@ public class Facade
         get
         {
             if (m_GameManager == null)
-                m_GameManager = GameObject.Find("GameManager");
+                m_GameManager = GameObject.Find("Launcher");
 
             return m_GameManager;
         }

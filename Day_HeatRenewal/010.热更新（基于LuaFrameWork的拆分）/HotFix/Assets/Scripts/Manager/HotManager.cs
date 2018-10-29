@@ -10,11 +10,11 @@ namespace HotFix
     {
         string updateWord = "";
         float updatePercent = 0;
-        public static List<string> downLoadFiles = new List<string>();
+        public List<string> downLoadFiles = new List<string>();
 
-        void Init()
+        public void Init()
         {
-
+            CheckExtractResource();
         }
 
         void CheckExtractResource()
@@ -22,8 +22,11 @@ namespace HotFix
             bool isExists = Directory.Exists(Util.DataPath) && Directory.Exists(Util.DataPath + "lua/") && File.Exists(Util.DataPath + "files.txt");
             if(isExists || AppConst.DebugMode)
             {
-
+                StartCoroutine(OnUpdateResource());
+                return;
             }
+
+            StartCoroutine(OnExtractResource());
         }
 
         IEnumerator OnUpdateResource()
@@ -31,6 +34,7 @@ namespace HotFix
             downLoadFiles.Clear();
             if(!AppConst.UpdateMode)
             {
+                Debug.LogError("!AppConst.UpdateMode");
                 Initialize(OnResourceInited);
                 yield break;
             }
@@ -45,6 +49,7 @@ namespace HotFix
 
             updateWord = "版本检测中：           " + (www.progress * 100).ToString() + "%";
             updatePercent = www.progress;
+            DownPanel.SetProgressAndFile(updatePercent, updateWord);
             yield return www;
             if (www.error != null)
             {
@@ -102,7 +107,7 @@ namespace HotFix
                             message = "更新检测完毕";
                             updateWord = message;
                             updatePercent = 1;
-
+                            DownPanel.SetProgressAndFile(updatePercent, updateWord);
 
                             OnUpdateMessageComplete(message);
                             //开始初始化
@@ -123,15 +128,118 @@ namespace HotFix
                 {
                     message = "downloading>>>" + fileUrl;
                     OnUpdateMessageDownLoad(message);
-                    
+                    BeginDownload(fileUrl, localFile);
+                    while (!(IsDownOk(localFile)))
+                    {
+                        updatePercent = (float) i/files.Length;
+                        updateWord = "更新游戏  " + i.ToString() + "/" + files.Length.ToString() +
+                                     "                                " + Math.Ceiling(updatePercent*100) + "%";
+                        DownPanel.SetProgressAndFile(updatePercent, updateWord);
+                        yield return new WaitForEndOfFrame();
+                    }
                 }
             }
 
+            if (isCanUpdateVer)
+            {
+                BeginDownload(strVerUrl, strLocalVer);
+                while (!(IsDownOk(strLocalVer)))
+                    yield return new WaitForEndOfFrame();
+            }
+
+            updatePercent = 100f;
+            updateWord = "更新游戏         " + files.Length.ToString() + "/" + files.Length.ToString() +
+                         "                                100%";
+            DownPanel.SetProgressAndFile(updatePercent, updateWord);
+            yield return new WaitForEndOfFrame();
+            Debug.LogError("更新完成!!!!!");
+
+            Initialize(OnResourceInited);
         }
 
+        IEnumerator OnExtractResource()
+        {
+            string dataPath = Util.DataPath;
+            string resPath = Util.AppContentPath();
 
-        
+            if (Directory.Exists(dataPath))
+                Directory.Delete(dataPath, true);
 
+            Directory.CreateDirectory(dataPath);
+
+            string infile = resPath + "files.txt";
+            string outfile = dataPath + "files.txt";
+
+            if (File.Exists(outfile))
+                File.Delete(outfile);
+
+            string message = "正在解包文件：>files.txt";
+
+
+            if (Application.platform == RuntimePlatform.Android)
+            {
+                WWW www = new WWW(infile);
+                updateWord = "版本检测中   " + (www.progress*100).ToString() + "%";
+                updatePercent = www.progress;
+                DownPanel.SetProgressAndFile(updatePercent, updateWord);
+                yield return www;
+
+                if (www.isDone)
+                    File.WriteAllBytes(outfile, www.bytes);
+
+                yield return 0;
+            }
+            else
+            {
+                File.Copy(infile, outfile, true);
+            }
+
+            yield return new WaitForEndOfFrame();
+
+            string[] files = File.ReadAllLines(outfile);
+            int index = 0;
+            foreach (var file in files)
+            {
+                index++;
+                string[] fs = file.Split('|');
+                infile = resPath + fs[0];
+                outfile = dataPath + fs[0];
+
+                message = "正在解包文件:>" + fs[0];
+
+
+                string dir = Path.GetDirectoryName(outfile);
+                if (!Directory.Exists(dir))
+                    Directory.CreateDirectory(dir);
+
+                if (Application.platform == RuntimePlatform.Android)
+                {
+                    WWW www = new WWW(infile);
+                    yield return www;
+
+                    if (www.isDone)
+                        File.WriteAllBytes(outfile, www.bytes);
+
+                    yield return 0;
+                }
+                else
+                {
+                    if (File.Exists(outfile))
+                        File.Delete(outfile);
+
+                    File.Copy(infile, outfile, true);
+                }
+
+                updatePercent = (float) index/files.Length;
+                updateWord = "解压文件中          " + Math.Ceiling((updatePercent*100)) + "%";
+                DownPanel.SetProgressAndFile(updatePercent, updateWord);
+                yield return new WaitForEndOfFrame();
+            }
+
+            yield return new WaitForSeconds(0.1f);
+
+            StartCoroutine(OnUpdateResource());
+        }
 
         void OnUpdateFailed(string file)
         {
@@ -140,32 +248,47 @@ namespace HotFix
             return;
         }
 
-
         void OnUpdateMessageComplete(string message)
         {
             
             Debug.LogError(message);
             return;
         }
-
+            
         void OnUpdateMessageDownLoad(string file)
         {
             string message = "更新下载：=======================<" + file + ">";
             Debug.LogError(message);
             return;
         }
-
-
+        
         void BeginDownload(string url,string file)
         {
             object[] param = new object[2] { url, file };
             ThreadEvent ev = new ThreadEvent();
             ev.key = NotiConst.UPDATE_DOWNLOAD;
             ev.evParams.AddRange(param);
-
+            ThreadManager.AddEvent(ev, OnThreadCompleted);
         }
 
+        void OnThreadCompleted(NotiData data)
+        {
+            switch (data.evName)
+            {
+                case NotiConst.UPDATE_EXTRACT:
+                    break;
+                case NotiConst.UPDATE_DOWNLOAD:
+                    if (!downLoadFiles.Contains(data.evParam.ToString()))
+                        downLoadFiles.Add(data.evParam.ToString());
+                    break;
+            }
+        }
 
+        bool IsDownOk(string file)
+        {
+            return downLoadFiles.Contains(file);
+        }
+        
         void Initialize(Action func)
         {
             if (func != null)
@@ -174,8 +297,12 @@ namespace HotFix
 
         void OnResourceInited()
         {
+            LuaManager.InitStart();
+            LuaManager.DoFile("Main.lua");
 
+            Util.CallMethod("Main", "Start");
         }
+
 
     }
 }

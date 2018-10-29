@@ -121,6 +121,27 @@ namespace LuaInterface
             EndPCall();
         }
 
+
+        public object[] Call(params object[] args)
+        {
+            BeginPCall();
+            int count = args == null ? 0 : args.Length;
+
+            if (!luaState.LuaCheckStack(count + 6))
+            {
+                EndPCall();
+                throw new Exception("Stack overflow");
+            }
+
+            PushArgs(args);
+            PCall();
+            if (luaState == null)
+                return null;
+            object[] objs = luaState.CheckObjects(oldTop);
+            EndPCall();
+            return objs;
+        }
+
         public void Call<T1>(T1 arg1)
         {
             BeginPCall();

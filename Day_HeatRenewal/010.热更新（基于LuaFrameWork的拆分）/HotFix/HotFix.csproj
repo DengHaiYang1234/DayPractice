@@ -92,12 +92,16 @@
     <Compile Include="Assets\Scripts\ConstDefine\AppConst.cs" />
     <Compile Include="Assets\Scripts\ConstDefine\ManagersName.cs" />
     <Compile Include="Assets\Scripts\ConstDefine\NotiConst.cs" />
+    <Compile Include="Assets\Scripts\Main.cs" />
     <Compile Include="Assets\Scripts\Manager\GamerManager.cs" />
     <Compile Include="Assets\Scripts\Manager\HotManager.cs" />
+    <Compile Include="Assets\Scripts\Manager\LuaInfos\LuaLoader.cs" />
     <Compile Include="Assets\Scripts\Manager\LuaInfos\LuaManager.cs" />
     <Compile Include="Assets\Scripts\Manager\ThreadInfos\ThreadEvent.cs" />
     <Compile Include="Assets\Scripts\Manager\ThreadInfos\ThreadManager.cs" />
+    <Compile Include="Assets\Scripts\UI\DownPanel.cs" />
     <Compile Include="Assets\Source\Generate\DelegateFactory.cs" />
+    <Compile Include="Assets\Source\Generate\HotFix_UtilWrap.cs" />
     <Compile Include="Assets\Source\Generate\LuaBinder.cs" />
     <Compile Include="Assets\Source\Generate\LuaInterface_DebuggerWrap.cs" />
     <Compile Include="Assets\Source\Generate\LuaInterface_InjectTypeWrap.cs" />
