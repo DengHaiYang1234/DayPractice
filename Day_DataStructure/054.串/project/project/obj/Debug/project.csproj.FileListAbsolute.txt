@@ -4,3 +4,9 @@ D:\C#\10.31(串)\project\project\bin\Debug\project.pdb
 D:\C#\10.31(串)\project\project\obj\Debug\project.csprojResolveAssemblyReference.cache
 D:\C#\10.31(串)\project\project\obj\Debug\project.exe
 D:\C#\10.31(串)\project\project\obj\Debug\project.pdb
+D:\DayDay\DayPractice\Day_DataStructure\054.串\project\project\bin\Debug\project.exe.config
+D:\DayDay\DayPractice\Day_DataStructure\054.串\project\project\obj\Debug\project.exe
+D:\DayDay\DayPractice\Day_DataStructure\054.串\project\project\obj\Debug\project.pdb
+D:\DayDay\DayPractice\Day_DataStructure\054.串\project\project\bin\Debug\project.exe
+D:\DayDay\DayPractice\Day_DataStructure\054.串\project\project\bin\Debug\project.pdb
+D:\DayDay\DayPractice\Day_DataStructure\054.串\project\project\obj\Debug\project.csprojResolveAssemblyReference.cache
