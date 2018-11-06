@@ -4,7 +4,7 @@ using UnityEngine;
 using HotFix;
 
 /// <summary>
-/// Facade单利
+/// Facade单利 主要用来获取各脚本
 /// </summary>
 public class AppFacade : Facade
 {

@@ -5,10 +5,15 @@ using System.IO;
 using System.Text;
 using System;
 
+
 namespace HotFix
 {
     public class Util
     {
+        #region  辅助方法
+        /// <summary>
+        /// 数据目录  注：除了在调试模式，Lua文件的加载路径都是通过DataPath
+        /// </summary>
         public static string DataPath
         {
             get
@@ -35,6 +40,20 @@ namespace HotFix
             Debug.Log(str);
         }
 
+        public static void LogErr(string str)
+        {
+            Debug.LogError(str);
+        }
+
+        public static void LogWarn(string str)
+        {
+            Debug.LogWarning(str);
+        }
+        /// <summary>
+        /// 编写文件的MD5校验码
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
         public static string MD5File(string file)
         {
             try
@@ -76,6 +95,13 @@ namespace HotFix
             return path;
         }
 
+        /// <summary>
+        /// 访问lua方法
+        /// </summary>
+        /// <param name="module"></param>  文件名
+        /// <param name="func"></param> 方法名
+        /// <param name="args"></param>
+        /// <returns></returns>
         public static object[] CallMethod(string module, string func, params object[] args)
         {
             LuaManager luaMgr = AppFacade.Instance.GetManager<LuaManager>(ManagersName.lua);
@@ -84,6 +110,11 @@ namespace HotFix
             return luaMgr.CallFunction(TrimPath(module) + "." + func);
         }
 
+        /// <summary>
+        /// 截取最后一个‘/’之后的路径.  例：Main.main
+        /// </summary>
+        /// <param name="origName"></param>
+        /// <returns></returns>
         public static string TrimPath(string origName)
         {
             string fileName = origName;
@@ -97,9 +128,7 @@ namespace HotFix
 
             return fileName;
         }
-
+        #endregion
     }
-
-
 }
 

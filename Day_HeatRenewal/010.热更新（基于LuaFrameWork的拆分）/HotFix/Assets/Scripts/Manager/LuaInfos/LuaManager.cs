@@ -3,15 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using LuaInterface;
 
-
+ 
 namespace HotFix
 {
     public class LuaManager : BaseClass
     {
+        # region Lua管理类.主要负责通过lua虚拟机，加载Lua文件或方法
         private LuaState lua;
         private LuaLoader loader;
         private LuaLooper loop = null;
 
+        /// <summary>
+        /// LuaManager启动初始化
+        /// </summary>
         private void Awake()
         {
             loader = new LuaLoader();
@@ -22,7 +26,9 @@ namespace HotFix
             LuaCoroutine.Register(lua, this);
         }
 
-
+        /// <summary>
+        /// 手动初始化
+        /// </summary>
         public void InitStart()
         {
             InitLuaPath();
@@ -32,8 +38,9 @@ namespace HotFix
             this.StartLooper();
         }
 
-
-        //初始第三方库
+        /// <summary>
+        /// 初始第三方库
+        /// </summary>
         void OpenLibs()
         {
             lua.LuaGetField(LuaIndexes.LUA_REGISTRYINDEX, "_LOADED");
@@ -44,13 +51,15 @@ namespace HotFix
             lua.LuaSetField(-2, "cjson.safe");
         }
 
+        /// <summary>
+        /// 初始化lua文件的加载路径
+        /// </summary>
         void InitLuaPath()
         {
             if (AppConst.DebugMode)
             {
                 string rootPath = AppConst.HotFixRoot;
-
-                lua.AddSearchPath(rootPath + "/Lua/");
+                lua.AddSearchPath(rootPath + "/LuaScripts/");
                 lua.AddSearchPath(rootPath + "/ToLua/Lua/");
             }
             else
@@ -58,6 +67,9 @@ namespace HotFix
         }
 
 
+        /// <summary>
+        /// 初始化  添加AssetBundle文件
+        /// </summary>
         void InitLuaBunlde()
         {
             if (loader.beZip)
@@ -71,10 +83,12 @@ namespace HotFix
             }
         }
 
-
+        /// <summary>
+        /// 入口
+        /// </summary>
         void StartMain()
         {
-            lua.DoFile("Main.lua");
+            lua.DoFile("Main.lua"); //其实就是包装了Loadfile，根据loadfile的返回函数运行一遍。  dofile每次加载,loadfile只加载文件而不执行。 
             LuaFunction main = lua.GetFunction("Main.main");
             main.Call();
             main.Dispose();
@@ -87,11 +101,21 @@ namespace HotFix
             loop.luaState = lua;
         }
 
+        /// <summary>
+        /// 加载Lua文件
+        /// </summary>
+        /// <param name="fileName"></param>
         public void DoFile(string fileName)
         {
             lua.DoFile(fileName);
         }
 
+        /// <summary>
+        /// 加载Lua文件中的lua方法
+        /// </summary>
+        /// <param name="funcName"></param>
+        /// <param name="args"></param>
+        /// <returns></returns>
         public object[] CallFunction(string funcName, params object[] args)
         {
             LuaFunction func = lua.GetFunction(funcName);
@@ -100,6 +124,7 @@ namespace HotFix
 
             return null;
         }
+
+        #endregion
     }
 }
-

@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using HotFix;
+
+/// <summary>
+/// 所有Manager的基类
+/// </summary>
 public class BaseClass : MonoBehaviour
 {
     private ThreadManager m_ThreadMgr;

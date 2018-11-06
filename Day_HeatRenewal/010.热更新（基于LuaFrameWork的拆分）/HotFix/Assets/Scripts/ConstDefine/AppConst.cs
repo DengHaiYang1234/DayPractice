@@ -17,7 +17,7 @@ namespace HotFix
         public static bool DebugMode = true;
 
         //lua代码Assetbundle模式
-        public static bool LuaBunldeMode = true;
+        public static bool LuaBunldeMode = false;
 
         //Lua字节码模式
         public static bool LuaByteMode = false;

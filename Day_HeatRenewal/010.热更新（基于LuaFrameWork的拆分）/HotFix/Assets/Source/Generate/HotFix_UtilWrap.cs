@@ -8,6 +8,8 @@ public class HotFix_UtilWrap
 	{
 		L.BeginClass(typeof(HotFix.Util), typeof(System.Object));
 		L.RegFunction("Log", Log);
+		L.RegFunction("LogErr", LogErr);
+		L.RegFunction("LogWarn", LogWarn);
 		L.RegFunction("MD5File", MD5File);
 		L.RegFunction("AppContentPath", AppContentPath);
 		L.RegFunction("CallMethod", CallMethod);
@@ -50,6 +52,38 @@ public class HotFix_UtilWrap
 			ToLua.CheckArgsCount(L, 1);
 			string arg0 = ToLua.CheckString(L, 1);
 			HotFix.Util.Log(arg0);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int LogErr(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			string arg0 = ToLua.CheckString(L, 1);
+			HotFix.Util.LogErr(arg0);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int LogWarn(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			string arg0 = ToLua.CheckString(L, 1);
+			HotFix.Util.LogWarn(arg0);
 			return 0;
 		}
 		catch (Exception e)

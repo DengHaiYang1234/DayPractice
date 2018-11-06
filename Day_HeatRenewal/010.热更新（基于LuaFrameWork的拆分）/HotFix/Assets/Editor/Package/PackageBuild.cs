@@ -51,6 +51,8 @@ public class PackageBuild : MonoBehaviour
 
         GenerateVersion();
         BuildFileMD5();
+
+        Util.LogErr("PackageBild Is Success!!!");
     }
     #endregion
 
@@ -59,7 +61,7 @@ public class PackageBuild : MonoBehaviour
     static void HandleLuaBundle()
     {
         BuildLuaAssetsBundles();
-        string luaPath = AppStreamPath + "lua";
+        string luaPath = AppStreamPath + "lua/";
         string[] luaPaths =
         {
             CustomSettings.luaDir,
@@ -67,7 +69,6 @@ public class PackageBuild : MonoBehaviour
         };
 
         CopyLuaFiles(luaPath, luaPaths);
-
     }
     #endregion
 
@@ -264,6 +265,7 @@ public class PackageBuild : MonoBehaviour
             {
                 if (f.EndsWith(".meta"))
                     continue;
+
                 string newFile = f.Replace(luaDataPath, "");
                 string newPath = destDir + newFile;
                 string path = Path.GetDirectoryName(newPath);
@@ -276,7 +278,9 @@ public class PackageBuild : MonoBehaviour
                 if (AppConst.LuaByteMode)
                     EncodeLuaFile(f, newPath);
                 else
+                {
                     File.Copy(f, newPath, true);
+                }
 
                 UpdateProgress(n++, files.Count, newPath);
 
