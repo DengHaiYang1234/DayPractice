@@ -26,12 +26,32 @@ namespace project
             bst.Insert(32);
 
             Console.WriteLine("-----------------递归------------------");
-            Console.WriteLine("\n" + "PreOrder: ");
-            bst.PreSort(bst.root);
-            Console.WriteLine("\n" + "MidSort:");
-            bst.MidSort(bst.root);
-            Console.WriteLine("\n" + "LastSort: ");
-            bst.LastSort(bst.root);
+            //Console.WriteLine("\n" + "PreOrder: ");
+            //bst.PreSort(bst.root);
+            //Console.WriteLine("\n" + "MidSort:");
+            //bst.MidSort(bst.root);
+            //Console.WriteLine("\n" + "LastSort: ");
+            //bst.LastSort(bst.root);
+
+            //Console.WriteLine("\n" + "PreOrderByNoram: ");
+            //bst.PreSortByNoram(bst.root);
+            //Console.WriteLine("\n" + "MidSortByNoram: ");
+            //bst.MidSortByNoram(bst.root);
+            //Console.WriteLine("\n" + "LastSortByNoram: ");
+            //bst.LastSortByNoram(bst.root);
+
+
+            //Console.WriteLine("最小值：" + bst.Min(bst.root));
+            //Console.WriteLine("最大值：" + bst.Max(bst.root));
+
+            //Console.WriteLine("找key值：" + bst.Find(18).Data);
+
+            //Console.WriteLine("总结点数：" + bst.GetTotalNodeNum(bst.root));
+
+            //Console.WriteLine("深度：" + bst.Depth(bst.root));
+
+            Console.WriteLine("层序遍历:");
+            bst.LevelTraverse(bst.root);
         }
     }
 }
