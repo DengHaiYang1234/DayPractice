@@ -331,5 +331,251 @@ namespace project
             return root;
         }
 
+        public void Delete(int key)
+        {
+            //当前要删除的节点
+            Node currentNode = root;
+            //上一节点
+            Node parentNode = currentNode;
+            bool isLeftChild = true;
+
+
+            while (currentNode.Data != key)
+            {
+                parentNode = currentNode;
+                if (key < currentNode.Data)
+                {
+                    isLeftChild = true;
+                    currentNode = currentNode.Left;
+                }
+                else
+                {
+                    isLeftChild = false;
+                    currentNode = currentNode.Right;
+                }
+
+                if (currentNode == null)
+                {
+                    Console.WriteLine("不存在该节点");
+                    break;
+                }
+            }
+
+            //要删除的节点下  没有左右节点
+            if (currentNode.Left == null && currentNode.Right == null)
+            {
+                //如果当前节点为头结点
+                if (currentNode == root)
+                    root = null;
+
+                //直接删除该左节点
+                else if (isLeftChild)
+                    parentNode.Left = null;
+                //直接删除该右节点
+                else
+                    parentNode.Right = null;
+            }
+
+            //要删除的节点下  存在一个左节点.没有右节点
+            else if (currentNode.Right == null && currentNode.Left != null)
+            {
+                //如果要删除为头结点  那么将头结点替换为原头节点的左节点即可
+                if (currentNode == root)
+                    root = currentNode.Left;
+                //要删除的节点位于上一节点的左边 那么就将该节点的下一节点放在上一节点的左边.反之亦然
+                else if (isLeftChild)
+                    parentNode.Left = currentNode.Left;
+                else
+                    parentNode.Right = currentNode.Left;
+            }
+
+            //要删除的节点下  存在一个右节点.没有左节点
+            else if (currentNode.Left == null && currentNode.Right != null)
+            {
+                if (currentNode == root)
+                    root = currentNode.Right;
+                else if (isLeftChild)
+                    parentNode.Left = currentNode.Right;
+                else
+                    parentNode.Right = currentNode.Right;
+            }
+            //存在两个等级
+            else
+            {
+                //先将currentNode的右边进行重新构造
+                Node successor = GetSuccessor(currentNode);
+                if (currentNode == root)
+                    root = successor;
+                else if (isLeftChild)
+                    parentNode.Left = successor;
+                else
+                    parentNode.Right = successor;
+
+                //再添加左边 就重构了二叉树
+                successor.Left = currentNode.Left;
+            }
+        }
+
+        public void OtherDelete(int key)
+        {
+            Node current = root;
+            Node parent = current;
+            while (true)
+            {
+                if (current.Data.Equals(key))
+                    break;
+                parent = current;
+
+                if (key < current.Data)
+                {
+                    current = current.Left;
+                }
+                else
+                {
+                    current = current.Right;
+                }
+
+                if (current == null)
+                {
+                    Console.WriteLine("未找到");
+                    break;
+                }
+            }
+
+            if (current.Left == null && current.Right == null)
+            {
+                if (current == root)
+                    root = null;
+                else if (parent.Left == current)
+                    parent.Left = null;
+                else
+                    parent.Right = null;
+            }
+            else if (current.Left != null && current.Right == null)
+            {
+                if (current == root)
+                    root = current.Left;
+                else if (parent.Left == current)
+                    parent.Left = current.Left;
+                else
+                    parent.Right = current.Left;
+            }
+            else if (current.Right != null && current.Left == null)
+            {
+                if (current == root)
+                    root = current.Right;
+                else if (parent.Left == current)
+                    parent.Left = current.Right;
+                else
+                    parent.Right = current.Right;
+            }
+            else
+            {
+                Node successor = GetSuccessor(current);
+                if (root == current)
+                    root = successor;
+                else if (parent.Left == current)
+                    parent.Left = successor;
+                else
+                    parent.Right = successor;
+
+                successor.Left = current.Left;
+            }
+
+
+        }
+
+        public Node GetSuccessor(Node delNode)
+        {
+            Node successorParent = delNode;
+            Node successor = delNode;
+            //从当前节点的右节点开始
+            Node current = delNode.Right;
+
+            while (current != null)
+            {
+                //始终是当前节点（current）的前两个节点位置
+                successorParent = successor;
+                //始终是当前节点（current）的上一节点位置
+                successor = current;
+                //current = null.上一节点为delNode的最后的左节点(即上一节点为：successor)
+                current = current.Left;
+            }
+
+            if (successor != delNode.Right)
+            {
+                //画图理解吧.....解释不了
+                successorParent.Left = successor.Right;
+                successor.Right = delNode.Right;
+            }
+
+            return successor;
+        }
+
+        public static Node ConverBalanceTreeDoubleList(Node root)
+        {
+            if (root == null)
+                return null;
+
+            Node head = null;
+            Node current = root;
+            Node preTreeNode = null;
+            Stack<Node> stack = new Stack<Node>();
+            while (stack.Count != 0 || current != null)
+            {
+                while (current != null)
+                {
+                    stack.Push(current);
+                    current = current.Left;
+                }
+
+                if (stack.Count != 0)
+                {
+                    current = stack.Pop();
+                    if (head == null)
+                        head = current;
+
+                    if (preTreeNode != null)
+                    {
+                        preTreeNode.Right = current;
+                    }
+
+                    preTreeNode = current;
+                    current = current.Right;
+                }
+            }
+            return head;
+        }
+
+        public static Node ConverBalanceTreeDoubleListRecursion(Node root)
+        {
+            if (root == null || (root.Left == null && root.Right == null))
+                return root;
+
+            Node temp = null;
+            if (root.Left != null)
+            {
+                temp = ConverBalanceTreeDoubleListRecursion(root.Left);
+                while (temp.Right != null)
+                    temp = temp.Right;
+                temp.Right = root;
+                root.Left = temp;
+            }
+
+            if (root.Right != null)
+            {
+                temp = ConverBalanceTreeDoubleListRecursion(root.Right);
+                while (temp.Left != null)
+                    temp = temp.Left;
+                temp.Left = root;
+                root.Right = temp;
+            }
+
+            return root;
+
+        }
+
+
+
     }
 }

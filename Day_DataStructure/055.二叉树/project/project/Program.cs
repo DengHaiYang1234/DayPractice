@@ -50,8 +50,23 @@ namespace project
 
             //Console.WriteLine("深度：" + bst.Depth(bst.root));
 
-            Console.WriteLine("层序遍历:");
-            bst.LevelTraverse(bst.root);
+            //Console.WriteLine("层序遍历:");
+
+
+            //bst.LevelTraverse(bst.root);
+
+            //Console.WriteLine("---------------------------");
+            //bst.OtherDelete(33);
+
+            //bst.LevelTraverse(bst.root);
+
+            Node head =  BinaryTree.ConverBalanceTreeDoubleListRecursion(bst.root);
+
+            while (head != null)
+            {
+                Console.WriteLine(head.Data);
+                head = head.Right;
+            }
         }
     }
 }
