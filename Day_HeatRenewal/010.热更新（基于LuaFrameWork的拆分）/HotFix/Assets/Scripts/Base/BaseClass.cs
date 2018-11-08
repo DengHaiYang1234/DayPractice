@@ -12,10 +12,11 @@ public class BaseClass : MonoBehaviour
     private LuaManager m_LuaMgr;
     private HotManager m_hotFixMgr;
     private GamerManager m_GameMgr;
+    private ResourceManager m_rescourMgr;
 
     Facade facde = new Facade();
 
-    public ThreadManager ThreadManager
+    public ThreadManager ThreadManager_
     {
         get
         {
@@ -25,7 +26,7 @@ public class BaseClass : MonoBehaviour
         }
     }
 
-    public LuaManager LuaManager
+    public LuaManager LuaManager_
     {
         get
         {
@@ -35,13 +36,35 @@ public class BaseClass : MonoBehaviour
         }
     }
 
-    public HotManager HotManager
+    public HotManager HotManager_
     {
         get
         {
             if (m_hotFixMgr == null)
                 m_hotFixMgr = facde.GetManager<HotManager>(ManagersName.hot);
             return m_hotFixMgr;
+        }
+    }
+
+
+    public ResourceManager ResourceManager_
+    {
+        get
+        {
+            if (m_rescourMgr == null)
+                m_rescourMgr = facde.GetManager<ResourceManager>(ManagersName.resource);
+
+            return m_rescourMgr;
+        }
+    }
+
+    public GamerManager GamerManager_
+    {
+        get
+        {
+            if (m_GameMgr == null)
+                m_GameMgr = facde.GetManager<GamerManager>(ManagersName.game);
+            return m_GameMgr;
         }
     }
 

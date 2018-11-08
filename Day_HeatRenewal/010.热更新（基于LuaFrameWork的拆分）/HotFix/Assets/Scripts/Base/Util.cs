@@ -40,7 +40,7 @@ namespace HotFix
             Debug.Log(str);
         }
 
-        public static void LogErr(string str)
+        public static void LogErr(object str)
         {
             Debug.LogError(str);
         }
@@ -128,7 +128,24 @@ namespace HotFix
 
             return fileName;
         }
-        #endregion
+
+        public static GameObject LoadAsset(AssetBundle bundle, string name)
+        {
+            try
+            {
+#if UNITY_5
+                return bundle.LoadAsset(name, typeof (GameObject)) as GameObject;
+#else
+                return bundle.Load(name, typeof(GameObject)) as GameObject;
+#endif
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+                return null;
+            }
+        }
+#endregion
     }
 }
 

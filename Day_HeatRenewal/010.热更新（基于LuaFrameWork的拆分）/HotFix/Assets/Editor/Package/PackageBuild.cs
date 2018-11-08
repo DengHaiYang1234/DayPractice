@@ -52,6 +52,8 @@ public class PackageBuild : MonoBehaviour
         GenerateVersion();
         BuildFileMD5();
 
+        BuildAssetsResource(target);
+
         Util.LogErr("PackageBild Is Success!!!");
     }
     #endregion
@@ -98,6 +100,7 @@ public class PackageBuild : MonoBehaviour
         Directory.Delete(streamDir, true);
         AssetDatabase.Refresh();
     }
+
     #endregion
 
     #region 3.在StreamingAssets目录中创建细分资源目录
@@ -300,6 +303,22 @@ public class PackageBuild : MonoBehaviour
         float value = (float)progress / (float)progressMax;
         EditorUtility.DisplayProgressBar(title, desc, value);
     }
+    #endregion
+
+    #region 10.打包其他项目资源（如场景，模型，特效等等）
+    static void BuildAssetsResource(BuildTarget target)
+    {
+        string assetPath = AppStreamPath;
+        if (!Directory.Exists(assetPath))
+            Directory.CreateDirectory(assetPath);
+
+        BuildAssetBundleOptions options = BuildAssetBundleOptions.CompleteAssets |
+                                          BuildAssetBundleOptions.CollectDependencies |
+                                          BuildAssetBundleOptions.DeterministicAssetBundle;
+        BuildPipeline.BuildAssetBundles(assetPath, options, target);
+        AssetDatabase.Refresh();
+    }
+
     #endregion
 
     #endregion

@@ -141,7 +141,7 @@ namespace HotFix
                 sw.Reset();
                 data = new NotiData(NotiConst.UPDATE_DOWNLOAD, currDownFile);
                 //防止下载完成并不会执行回调
-                HotManager.downLoadFiles.Add(data.evParam.ToString());
+                HotManager_.downLoadFiles.Add(data.evParam.ToString());
                 if (m_SyncEvent != null) m_SyncEvent(data);
             }
         }

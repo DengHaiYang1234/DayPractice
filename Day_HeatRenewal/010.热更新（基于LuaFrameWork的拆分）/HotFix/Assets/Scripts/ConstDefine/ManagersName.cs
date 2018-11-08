@@ -10,6 +10,7 @@ namespace HotFix
         public const string thread = "ThreadManager";
         public const string hot = "HotManager";
         public const string game = "GamerManager";
+        public const string resource = "ResourceManager";
     }
 }
 

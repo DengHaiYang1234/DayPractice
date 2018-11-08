@@ -22,10 +22,12 @@ public class AppFacade : Facade
 
     public void StartUp()
     {
+        AddManager<ResourceManager>(ManagersName.resource);
         AddManager<ThreadManager>(ManagersName.thread);
         AddManager<LuaManager>(ManagersName.lua);
         AddManager<HotManager>(ManagersName.hot);
         AddManager<GamerManager>(ManagersName.game);
+        AddManager<ResourceManager>(ManagersName.resource);
     }
 
 }

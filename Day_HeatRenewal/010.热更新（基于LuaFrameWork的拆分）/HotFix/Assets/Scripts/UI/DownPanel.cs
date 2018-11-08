@@ -12,19 +12,6 @@ public class DownPanel : MonoBehaviour
     static Text fileName;
 
 
-    private static DownPanel _instance;
-
-    public static DownPanel Instance
-    {
-        get
-        {
-            if (_instance == null)
-                _instance = new DownPanel();
-            return _instance;
-        }
-    }
-
-
     void Start ()
     {
         progress = this.transform.Find("DownPro").gameObject;
@@ -32,13 +19,15 @@ public class DownPanel : MonoBehaviour
 
         progressValue = progress.GetComponent<Text>();
         fileName = file.GetComponent<Text>();
+
+        SetProgressAndFile();
     }
 
 
-    public static void SetProgressAndFile(float pro,string name)
+    public static void SetProgressAndFile()
     {
-        progressValue.text = pro.ToString();
-        fileName.text = name;
+        progressValue.text = "下载已全部完成！！！！！   测试";
+        fileName.text = "文件已全部下载完成   测试";
     }
 
 

@@ -56,7 +56,7 @@ namespace HotFix
 
             updateWord = "版本检测中：           " + (www.progress * 100).ToString() + "%";
             updatePercent = www.progress;
-            DownPanel.SetProgressAndFile(updatePercent, updateWord);
+            //DownPanel.SetProgressAndFile(updatePercent, updateWord);
             yield return www;
 
             //下载错误情况
@@ -136,7 +136,7 @@ namespace HotFix
                             message = "更新检测完毕";
                             updateWord = message;
                             updatePercent = 1;
-                            DownPanel.SetProgressAndFile(updatePercent, updateWord);
+                            //DownPanel.SetProgressAndFile(updatePercent, updateWord);
 
                             OnUpdateMessageComplete(message);
                             //开始初始化
@@ -170,7 +170,7 @@ namespace HotFix
                         updatePercent = (float) i/files.Length;
                         updateWord = "开始下载资源  " + i.ToString() + "/" + files.Length.ToString() +
                                      "                                " + Math.Ceiling(updatePercent*100) + "%";
-                        DownPanel.SetProgressAndFile(updatePercent, updateWord);
+                        //DownPanel.SetProgressAndFile(updatePercent, updateWord);
                         yield return new WaitForEndOfFrame();
                     }
                 }
@@ -187,7 +187,7 @@ namespace HotFix
             updatePercent = 100f;
             updateWord = "更新游戏完成         " + files.Length.ToString() + "/" + files.Length.ToString() +
                          "                                100%";
-            DownPanel.SetProgressAndFile(updatePercent, updateWord);
+            //DownPanel.SetProgressAndFile(updatePercent, updateWord);
             yield return new WaitForEndOfFrame();
             Debug.LogError("更新完成!!!!!");
 
@@ -218,7 +218,7 @@ namespace HotFix
                 WWW www = new WWW(infile);
                 updateWord = "版本检测中   " + (www.progress*100).ToString() + "%";
                 updatePercent = www.progress;
-                DownPanel.SetProgressAndFile(updatePercent, updateWord);
+                //DownPanel.SetProgressAndFile(updatePercent, updateWord);
                 yield return www;
 
                 if (www.isDone)
@@ -269,7 +269,7 @@ namespace HotFix
 
                 updatePercent = (float) index/files.Length;
                 updateWord = "解压文件中          " + Math.Ceiling((updatePercent*100)) + "%";
-                DownPanel.SetProgressAndFile(updatePercent, updateWord);
+                //DownPanel.SetProgressAndFile(updatePercent, updateWord);
                 yield return new WaitForEndOfFrame();
             }
 
@@ -312,7 +312,7 @@ namespace HotFix
             //添加实现了ICollection接口的一个集合的所有元素到指定集合的末尾
             ev.evParams.AddRange(param);
             //添加线程事件.通过线程开始执行下载
-            ThreadManager.AddEvent(ev, OnThreadCompleted);
+            ThreadManager_.AddEvent(ev, OnThreadCompleted);
         }
 
         /// <summary>
@@ -345,10 +345,19 @@ namespace HotFix
 
         void OnResourceInited()
         {
-            LuaManager.InitStart();
-            LuaManager.DoFile("Main.lua"); //加载文件，编译文件，并且返回一个函数，不运行。 
+            string path = "paneldown.assetbundle";
+            ResourceManager_.CacheBundle(path);
+            LuaManager_.InitStart();
+            LuaManager_.DoFile("Main.lua"); //加载文件，编译文件，并且返回一个函数，不运行。 
 
             Util.CallMethod("Main", "start");
+            LoadInitPrefab(path);
+        }
+
+        void LoadInitPrefab(string path)
+        {
+            GameObject obj =  ResourceManager_.CreatGamePrefab(path);
+            obj.transform.position = Vector3.zero;
         }
         #endregion
 

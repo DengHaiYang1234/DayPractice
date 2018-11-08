@@ -97,6 +97,7 @@
     <Compile Include="Assets\Scripts\Manager\HotManager.cs" />
     <Compile Include="Assets\Scripts\Manager\LuaInfos\LuaLoader.cs" />
     <Compile Include="Assets\Scripts\Manager\LuaInfos\LuaManager.cs" />
+    <Compile Include="Assets\Scripts\Manager\ResourceManager.cs" />
     <Compile Include="Assets\Scripts\Manager\ThreadInfos\ThreadEvent.cs" />
     <Compile Include="Assets\Scripts\Manager\ThreadInfos\ThreadManager.cs" />
     <Compile Include="Assets\Scripts\UI\DownPanel.cs" />

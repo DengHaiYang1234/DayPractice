@@ -2,15 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 using HotFix;
-
-
+using System;
 
 public class GamerManager : BaseClass
 {
     #region 游戏管理类
-    private void Awake()
+    public void Awake()
     {
-        HotManager.Init();
+        HotManager_.Init();
     }
+
+
+    public void StartGame(Action func = null)
+    {
+        Util.LogErr("GamerManager  GamerManager  StartGame");
+    }
+
+
     #endregion
 }
