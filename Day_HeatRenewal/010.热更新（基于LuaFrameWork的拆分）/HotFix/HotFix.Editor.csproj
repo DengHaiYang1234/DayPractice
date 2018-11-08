@@ -121,12 +121,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="HotFix.csproj">
-      <Project>{8BB8CBF8-0E5C-C114-4C88-CB369CCB7161}</Project>
-      <Name>HotFix</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Assets\Editor\Custom\CustomSettings.cs" />
     <Compile Include="Assets\Editor\Package\PackageBuild.cs" />
     <Compile Include="Assets\ToLua\Editor\Extend\ToLua_LuaInterface_EventObject.cs" />

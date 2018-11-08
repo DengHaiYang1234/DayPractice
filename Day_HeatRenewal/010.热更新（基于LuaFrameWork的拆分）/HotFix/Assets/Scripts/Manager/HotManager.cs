@@ -339,14 +339,15 @@ namespace HotFix
         
         void Initialize(Action func)
         {
+            ResourceManager_.Initialize();
             if (func != null)
                 func();
         }
 
         void OnResourceInited()
         {
-            string path = "paneldown.assetbundle";
-            ResourceManager_.CacheBundle(path);
+            string path = "game/DownLoadPanel";
+            //ResourceManager_.CacheBundle(path);
             LuaManager_.InitStart();
             LuaManager_.DoFile("Main.lua"); //加载文件，编译文件，并且返回一个函数，不运行。 
 

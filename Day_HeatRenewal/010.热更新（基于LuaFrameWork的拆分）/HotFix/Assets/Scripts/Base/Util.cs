@@ -129,6 +129,12 @@ namespace HotFix
             return fileName;
         }
 
+        /// <summary>
+        /// 加载AssetBundle资源.
+        /// </summary>
+        /// <param name="bundle"></param>
+        /// <param name="name"></param> name为AssetBundle中的prefab名称 
+        /// <returns></returns>
         public static GameObject LoadAsset(AssetBundle bundle, string name)
         {
             try

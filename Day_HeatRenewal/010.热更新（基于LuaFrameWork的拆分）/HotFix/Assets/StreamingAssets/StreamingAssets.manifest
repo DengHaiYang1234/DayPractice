@@ -1,7 +1,7 @@
 ManifestFileVersion: 0
-CRC: 2587653825
+CRC: 1338228748
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: game/paneldown.assetbundle
+      Name: game/downloadpanel.assetbundle
       Dependencies: {}
