@@ -3,32 +3,52 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DownPanel : MonoBehaviour
+namespace HotFix
 {
-    GameObject progress;
-    GameObject file;
-
-    static Text progressValue;
-    static Text fileName;
-
-
-    void Start ()
+    public class DownPanel : MonoBehaviour
     {
-        progress = this.transform.Find("DownPro").gameObject;
-        file = this.transform.Find("DownName").gameObject;
+        GameObject progress;
+        GameObject file;
 
-        progressValue = progress.GetComponent<Text>();
-        fileName = file.GetComponent<Text>();
+        static Text progressValue;
+        static Text fileName;
+        
+        public static void SetProgressValue(string str)
+        {
+            if (progressValue == null)
+            {
+                GameObject panel = GetObj();
+                progressValue = panel.transform.Find("Canvas/DownPro").gameObject.GetComponent<Text>();
 
-        SetProgressAndFile();
+                progressValue.text = str;
+            }
+            
+        }
+
+        public static void SetFileValue(string str)
+        {
+            if (fileName == null)
+            {
+                GameObject panel = GetObj();
+
+                if (panel.transform.Find("Canvas/DownName") != null)
+                {
+                    fileName = panel.transform.Find("Canvas/DownName").gameObject.GetComponent<Text>();
+
+                    fileName.text = str;
+                }
+                else
+                {
+                    Util.LogErr("不存在 fileName  fileName  fileName！！！！！！");
+                }
+            }
+        }
+
+        public static GameObject GetObj()
+        {
+            GameObject panel = GameObject.Find("DownLoadPanel(Clone)") as GameObject;
+            return panel;
+        }
     }
-
-
-    public static void SetProgressAndFile()
-    {
-        progressValue.text = "下载已全部完成！！！！！   测试";
-        fileName.text = "文件已全部下载完成   测试";
-    }
-
-
 }
+

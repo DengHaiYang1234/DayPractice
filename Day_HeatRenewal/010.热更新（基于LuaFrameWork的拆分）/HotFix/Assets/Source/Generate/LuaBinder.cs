@@ -73,6 +73,7 @@ public static class LuaBinder
 		L.EndModule();
 		L.BeginModule("HotFix");
 		HotFix_UtilWrap.Register(L);
+		HotFix_DownPanelWrap.Register(L);
 		L.EndModule();
 		L.BeginModule("System");
 		L.RegFunction("Action", System_Action);

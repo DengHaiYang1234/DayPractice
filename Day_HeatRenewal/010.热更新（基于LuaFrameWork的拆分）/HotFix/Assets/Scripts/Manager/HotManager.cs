@@ -24,7 +24,13 @@ namespace HotFix
         void CheckExtractResource()
         {
             bool isExists = Directory.Exists(Util.DataPath) && Directory.Exists(Util.DataPath + "lua/") && File.Exists(Util.DataPath + "files.txt");
-            if(isExists || AppConst.DebugMode)
+            Util.LogErr("Util.DataPath:" + Util.DataPath);
+            Util.LogErr("=====Directory.Exists(Util.DataPath):" + Directory.Exists(Util.DataPath));
+            Util.LogErr("=====Util.DataPath + lua:" + Util.DataPath + "lua/");
+            Util.LogErr("====Util.DataPath + files.txt:" + Util.DataPath + "files.txt");
+            Util.LogErr("isExists:" + isExists);
+            Util.LogErr("AppConst.DebugMode:" + AppConst.DebugMode);
+            if (isExists || AppConst.DebugMode)
             {
                 StartCoroutine(OnUpdateResource());
                 return;
@@ -39,19 +45,24 @@ namespace HotFix
             downLoadFiles.Clear();
             if(!AppConst.UpdateMode)
             {
-                Debug.LogError("!AppConst.UpdateMode");
                 Initialize(OnResourceInited);
                 yield break;
             }
 
             //下载url
             string url = AppConst.WebUrl;
+            Util.LogErr("url:" + url);
+  
+            //if (Application.platform == RuntimePlatform.IPhonePlayer)
+            //    url += "ios/";
+            //else if(Application.platform == RuntimePlatform.Android)
+            //    url += "android/";
 
             string random = DateTime.Now.ToString("yyyymmddhhmmss");
 
             //路径
             string dataUrl = url + "files.txt?v=" + random;
-
+            Util.LogErr("dataUrl:" + dataUrl);
             WWW www = new WWW(dataUrl);
 
             updateWord = "版本检测中：           " + (www.progress * 100).ToString() + "%";
@@ -196,8 +207,11 @@ namespace HotFix
 
         IEnumerator OnExtractResource()
         {
+            Util.LogErr("OnExtractResource");
             string dataPath = Util.DataPath;
+            Util.LogErr("dataPath:" + dataPath);
             string resPath = Util.AppContentPath();
+            Util.LogErr("resPath:" + resPath);
 
             if (Directory.Exists(dataPath))
                 Directory.Delete(dataPath, true);
@@ -264,6 +278,9 @@ namespace HotFix
                     if (File.Exists(outfile))
                         File.Delete(outfile);
 
+
+                    Util.LogErr("infile:" + infile);
+                    Util.LogErr("outfile:" + outfile);
                     File.Copy(infile, outfile, true);
                 }
 
@@ -348,11 +365,12 @@ namespace HotFix
         {
             string path = "game/DownLoadPanel";
             //ResourceManager_.CacheBundle(path);
+            LoadInitPrefab(path);
             LuaManager_.InitStart();
             LuaManager_.DoFile("Main.lua"); //加载文件，编译文件，并且返回一个函数，不运行。 
 
             Util.CallMethod("Main", "start");
-            LoadInitPrefab(path);
+            Util.CallMethod("Main", "SetValue");
         }
 
         void LoadInitPrefab(string path)

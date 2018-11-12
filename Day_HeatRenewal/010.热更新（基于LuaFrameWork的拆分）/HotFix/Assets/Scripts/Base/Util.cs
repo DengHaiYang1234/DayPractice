@@ -20,6 +20,7 @@ namespace HotFix
             {
                 string game = AppConst.AppName.ToLower();
                 if (Application.isMobilePlatform)
+                    Debug.LogError("Application.persistentDataPath:" + Application.persistentDataPath);
                     return Application.persistentDataPath + "/" + game + "/";
                 if (Application.platform == RuntimePlatform.WindowsPlayer)
                     return Application.streamingAssetsPath + "/";

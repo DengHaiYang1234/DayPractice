@@ -33,6 +33,12 @@ public class PackageBuild : MonoBehaviour
     }
     #endregion
 
+    [MenuItem("AssetsBundle/Build Android Resource", false, 102)]
+    public static void BuildAndroidResource()
+    {
+        BuildAssetResource(BuildTarget.Android, false);
+    }
+
     #region  根据选择平台的不同 开始打包资源
     public static void BuildAssetResource(BuildTarget target, bool delfold = true)
     {
@@ -315,7 +321,9 @@ public class PackageBuild : MonoBehaviour
         BuildAssetBundleOptions options = BuildAssetBundleOptions.CompleteAssets |
                                           BuildAssetBundleOptions.CollectDependencies |
                                           BuildAssetBundleOptions.DeterministicAssetBundle;
-        BuildPipeline.BuildAssetBundles(assetPath, options, target);
+
+        Util.LogErr("target:" + target);
+        BuildPipeline.BuildAssetBundles(assetPath, BuildAssetBundleOptions.None, EditorUserBuildSettings.activeBuildTarget);
         AssetDatabase.Refresh();
     }
 

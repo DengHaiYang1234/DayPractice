@@ -14,19 +14,19 @@ namespace HotFix
         public const string LuaTempDir = "LuaTempDir/";
 
         //!调试模式-用于内部测试
-        public static bool DebugMode = true;
+        public static bool DebugMode = false;
 
         //lua代码Assetbundle模式
-        public static bool LuaBunldeMode = false;
+        public static bool LuaBunldeMode = true;
 
         //Lua字节码模式
         public static bool LuaByteMode = false;
 
         //更新模式
-        public static bool UpdateMode = false;
-
+        public static bool UpdateMode = true;
+        
         //下载地址
-        public static string WebUrl = "http://localhost:8081/StreamingAssets/";
+        public static string WebUrl = "http://192.168.93.192:8081/StreamingAssets/";
 
         //根目录
         public static string HotFixRoot = Application.dataPath + "/";
