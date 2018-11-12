@@ -1,16 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LogFileFinder : MonoBehaviour
 {
-
     public string output = "";
     public string stack = "";
 
     private void Awake()
     {
-        gameObject.AddComponent<MyDebug>();
+        var obj = GameObject.Find("Debug_Canvas/DeBugCom").gameObject;
+        obj.AddComponent<MyDebug>();
     }
     
     void OnEnable()

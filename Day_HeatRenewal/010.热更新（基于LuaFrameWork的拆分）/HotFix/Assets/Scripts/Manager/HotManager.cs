@@ -126,10 +126,14 @@ namespace HotFix
                 {
                     //获取文件MD5
                     string remoteMD5 = keyValue[1].Trim();
+                    Util.LogErr("URL 文件MD5=======：" + remoteMD5);
                     //计算该文件MD5
                     string localMD5 = Util.MD5File(localFile);
+                    Util.LogErr("本地 文件MD5=======：" + remoteMD5);
                     //检验MD5是否匹配  匹配即不用更新.反之亦然
                     canUpdate = !remoteMD5.Equals(localMD5);
+                    Util.LogErr("localFile=======：" + localFile);
+                    Util.LogErr("localFile能否更新=======：" + canUpdate);
                     //若已检测到了两个MD5不同,那么删除本地文件.开始下载
                     if (canUpdate)
                         File.Delete(localFile);
@@ -376,7 +380,11 @@ namespace HotFix
         void LoadInitPrefab(string path)
         {
             GameObject obj =  ResourceManager_.CreatGamePrefab(path);
-            obj.transform.position = Vector3.zero;
+            var parent =  GameObject.Find("UI_Canvas").gameObject;
+            obj.transform.parent = parent.transform;
+            obj.AddComponent<DownPanel>();
+            obj.transform.localPosition = Vector3.zero;
+            //RectTransform
         }
         #endregion
 

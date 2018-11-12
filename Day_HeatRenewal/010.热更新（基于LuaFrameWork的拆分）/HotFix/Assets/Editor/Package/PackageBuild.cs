@@ -321,9 +321,8 @@ public class PackageBuild : MonoBehaviour
         BuildAssetBundleOptions options = BuildAssetBundleOptions.CompleteAssets |
                                           BuildAssetBundleOptions.CollectDependencies |
                                           BuildAssetBundleOptions.DeterministicAssetBundle;
-
-        Util.LogErr("target:" + target);
-        BuildPipeline.BuildAssetBundles(assetPath, BuildAssetBundleOptions.None, EditorUserBuildSettings.activeBuildTarget);
+        
+        BuildPipeline.BuildAssetBundles(assetPath, BuildAssetBundleOptions.None, target);
         AssetDatabase.Refresh();
     }
 

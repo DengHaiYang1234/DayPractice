@@ -1,7 +1,0 @@
-ManifestFileVersion: 0
-CRC: 549923466
-AssetBundleManifest:
-  AssetBundleInfos:
-    Info_0:
-      Name: game/downloadpanel.assetbundle
-      Dependencies: {}

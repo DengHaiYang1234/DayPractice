@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3049520766
+CRC: 3265166228
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: fac6325f2cd0984a6263354e587726fd
+    Hash: 7f342775c19f0ffdf78a78b81462f3eb
   TypeTreeHash:
     serializedVersion: 2
     Hash: 1033bf7ddfd4c6d43e7a6382c0a0a61a
@@ -13,6 +13,6 @@ ClassTypes:
   Script: {instanceID: 0}
 Assets:
 - Assets/LuaTempDir/System/Injection/InjectionBridgeInfo.lua.bytes
-- Assets/LuaTempDir/System/Injection/LuaInjectionBus.lua.bytes
 - Assets/LuaTempDir/System/Injection/LuaInjectionStation.lua.bytes
+- Assets/LuaTempDir/System/Injection/LuaInjectionBus.lua.bytes
 Dependencies: []

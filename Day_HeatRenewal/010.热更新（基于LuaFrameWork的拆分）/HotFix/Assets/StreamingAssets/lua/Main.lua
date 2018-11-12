@@ -16,7 +16,7 @@ end
 
 function Main.SetValue()
     DownPanel = HotFix.DownPanel
-    DownPanel.SetProgressValue("============Progress")
-    DownPanel.SetFileValue("============File")
+    DownPanel.SetProgressValue("手机Lua成功")
+    DownPanel.SetFileValue("11111111")
 end
  
