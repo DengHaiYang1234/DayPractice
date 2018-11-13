@@ -24,12 +24,12 @@ namespace HotFix
         void CheckExtractResource()
         {
             bool isExists = Directory.Exists(Util.DataPath) && Directory.Exists(Util.DataPath + "lua/") && File.Exists(Util.DataPath + "files.txt");
-            Util.LogErr("Util.DataPath:" + Util.DataPath);
-            Util.LogErr("=====Directory.Exists(Util.DataPath):" + Directory.Exists(Util.DataPath));
-            Util.LogErr("=====Util.DataPath + lua:" + Util.DataPath + "lua/");
-            Util.LogErr("====Util.DataPath + files.txt:" + Util.DataPath + "files.txt");
-            Util.LogErr("isExists:" + isExists);
-            Util.LogErr("AppConst.DebugMode:" + AppConst.DebugMode);
+            //Util.LogErr("Util.DataPath:" + Util.DataPath);
+            //Util.LogErr("=====Directory.Exists(Util.DataPath):" + Directory.Exists(Util.DataPath));
+            //Util.LogErr("=====Util.DataPath + lua:" + Util.DataPath + "lua/");
+            //Util.LogErr("====Util.DataPath + files.txt:" + Util.DataPath + "files.txt");
+            //Util.LogErr("isExists:" + isExists);
+            //Util.LogErr("AppConst.DebugMode:" + AppConst.DebugMode);
             if (isExists || AppConst.DebugMode)
             {
                 StartCoroutine(OnUpdateResource());
@@ -51,7 +51,7 @@ namespace HotFix
 
             //下载url
             string url = AppConst.WebUrl;
-            Util.LogErr("url:" + url);
+            //Util.LogErr("url:" + url);
   
             //if (Application.platform == RuntimePlatform.IPhonePlayer)
             //    url += "ios/";
@@ -62,7 +62,7 @@ namespace HotFix
 
             //路径
             string dataUrl = url + "files.txt?v=" + random;
-            Util.LogErr("dataUrl:" + dataUrl);
+            //Util.LogErr("dataUrl:" + dataUrl);
             WWW www = new WWW(dataUrl);
 
             updateWord = "版本检测中：           " + (www.progress * 100).ToString() + "%";
@@ -126,14 +126,24 @@ namespace HotFix
                 {
                     //获取文件MD5
                     string remoteMD5 = keyValue[1].Trim();
-                    Util.LogErr("URL 文件MD5=======：" + remoteMD5);
+                    
                     //计算该文件MD5
                     string localMD5 = Util.MD5File(localFile);
-                    Util.LogErr("本地 文件MD5=======：" + remoteMD5);
+                    
                     //检验MD5是否匹配  匹配即不用更新.反之亦然
                     canUpdate = !remoteMD5.Equals(localMD5);
-                    Util.LogErr("localFile=======：" + localFile);
-                    Util.LogErr("localFile能否更新=======：" + canUpdate);
+                    
+                    if (canUpdate)
+                    {
+                        //Util.Log("================================================================");
+                        //Util.LogErr("====================localFile：" + localFile);
+                        ////url MD5
+                        //Util.LogErr("==========url MD5==========remoteMD5：" + remoteMD5);
+                        ////本地 MD5
+                        //Util.LogErr("==========本地 MD5==========localMD5：" + localMD5);
+                        //Util.Log("================================================================");
+                    }
+
                     //若已检测到了两个MD5不同,那么删除本地文件.开始下载
                     if (canUpdate)
                         File.Delete(localFile);
@@ -211,11 +221,8 @@ namespace HotFix
 
         IEnumerator OnExtractResource()
         {
-            Util.LogErr("OnExtractResource");
             string dataPath = Util.DataPath;
-            Util.LogErr("dataPath:" + dataPath);
             string resPath = Util.AppContentPath();
-            Util.LogErr("resPath:" + resPath);
 
             if (Directory.Exists(dataPath))
                 Directory.Delete(dataPath, true);
@@ -302,7 +309,7 @@ namespace HotFix
         void OnUpdateFailed(string file)
         {
             string message = "更新失败：=======================<" + file + ">";
-            Debug.LogError(message);
+            //Debug.LogError(message);
             return;
         }
 
@@ -316,7 +323,7 @@ namespace HotFix
         void OnUpdateMessageDownLoad(string file)
         {
             string message = "更新下载：=======================<" + file + ">";
-            Debug.LogError(message);
+            //Debug.LogError(message);
             return;
         }
 

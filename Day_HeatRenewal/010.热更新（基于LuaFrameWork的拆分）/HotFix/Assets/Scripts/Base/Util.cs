@@ -151,6 +151,24 @@ namespace HotFix
                 return null;
             }
         }
+
+        public static string GetPlatfromFoldername()
+        {
+            switch (Application.platform)
+            {
+                case RuntimePlatform.WindowsEditor:
+                case RuntimePlatform.WindowsPlayer:
+                {
+                    return AppConst.StandaloneWindows;
+                }
+                case RuntimePlatform.Android:
+                    return AppConst.Android;
+                case RuntimePlatform.IPhonePlayer:
+                    return AppConst.Ios;
+                default:
+                    return AppConst.StandaloneWindows;
+            }
+        }
 #endregion
     }
 }

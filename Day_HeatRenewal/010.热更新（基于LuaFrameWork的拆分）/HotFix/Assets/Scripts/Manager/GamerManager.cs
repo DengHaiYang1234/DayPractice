@@ -9,13 +9,17 @@ public class GamerManager : BaseClass
     #region 游戏管理类
     public void Awake()
     {
+        SDRootPath.Instance.Init();
         HotManager_.Init();
     }
 
 
-    public void StartGame(Action func = null)
+    private void Start()
     {
-        Util.LogErr("GamerManager  GamerManager  StartGame");
+        if (LTDebugOutput.Instance != null)
+        {
+            LTDebugOutput.Instance.Init();
+        }
     }
 
 

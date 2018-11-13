@@ -12,12 +12,13 @@ namespace HotFix
         public const string BundleName = ".assetbundle";
         //临时目录
         public const string LuaTempDir = "LuaTempDir/";
+        
 
         //!调试模式-用于内部测试
         public static bool DebugMode = false;
 
         //lua代码Assetbundle模式
-        public static bool LuaBunldeMode = false;
+        public static bool LuaBunldeMode = true;
 
         //Lua字节码模式
         public static bool LuaByteMode = false;
@@ -30,6 +31,11 @@ namespace HotFix
 
         //根目录
         public static string HotFixRoot = Application.dataPath + "/";
+
+        public const string StandaloneWindows = "PC";
+        public const string Android = "Android";
+        public const string Ios = "Ios";
+        public const string BinFolderName = "Bin";
     }
 }
 

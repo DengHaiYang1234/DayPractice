@@ -87,11 +87,16 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Base\AppFacade.cs" />
     <Compile Include="Assets\Scripts\Base\BaseClass.cs" />
+    <Compile Include="Assets\Scripts\Base\ClassicalSingleton.cs" />
     <Compile Include="Assets\Scripts\Base\Facade.cs" />
     <Compile Include="Assets\Scripts\Base\Util.cs" />
     <Compile Include="Assets\Scripts\ConstDefine\AppConst.cs" />
     <Compile Include="Assets\Scripts\ConstDefine\ManagersName.cs" />
     <Compile Include="Assets\Scripts\ConstDefine\NotiConst.cs" />
+    <Compile Include="Assets\Scripts\LogDebug\LTDebugOutput.cs" />
+    <Compile Include="Assets\Scripts\LogDebug\LTDebugText.cs" />
+    <Compile Include="Assets\Scripts\LogDebug\SDDebug.cs" />
+    <Compile Include="Assets\Scripts\LogDebug\SDRootPath.cs" />
     <Compile Include="Assets\Scripts\LogFileFinder.cs" />
     <Compile Include="Assets\Scripts\Main.cs" />
     <Compile Include="Assets\Scripts\Manager\GamerManager.cs" />
