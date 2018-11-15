@@ -1,0 +1,5 @@
+﻿SDDebug##Error:11/14/2018 4:11:25 PM::更新下载：=======================<downloading>>>http://192.168.93.192:8081/StreamingAssets/StreamingAssets?v=20181114041125>
+SDDebug##Error:11/14/2018 4:11:26 PM::更新下载：=======================<downloading>>>http://192.168.93.192:8081/StreamingAssets/StreamingAssets.manifest?v=20181114041125>
+SDDebug##Error:11/14/2018 4:11:26 PM::更新检测完毕
+SDDebug##Error:11/14/2018 4:11:26 PM::普通测试--------这是用来测试CustomSettings
+SDDebug##Error:11/14/2018 4:13:33 PM::PackageBild Is Success!!!

@@ -1,0 +1,6 @@
+﻿SDDebug##Error:11/14/2018 6:34:30 PM::Util.DataPath:d:/hotfix/
+SDDebug##Error:11/14/2018 6:34:30 PM::isExists:True
+SDDebug##Error:11/14/2018 6:34:31 PM::更新完成!!!!!
+SDDebug##Error:11/14/2018 6:34:31 PM:: Getprefab ==path:game/DownLoadPanel
+SDDebug##Error:11/14/2018 6:34:31 PM::普通测试--------这是用来测试CustomSettings
+SDDebug##Error:11/14/2018 6:35:30 PM::PackageBild Is Success!!!
