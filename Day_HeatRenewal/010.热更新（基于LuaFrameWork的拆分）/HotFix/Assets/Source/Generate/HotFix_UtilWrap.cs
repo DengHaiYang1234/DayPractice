@@ -15,6 +15,7 @@ public class HotFix_UtilWrap
 		L.RegFunction("CallMethod", CallMethod);
 		L.RegFunction("TrimPath", TrimPath);
 		L.RegFunction("LoadAsset", LoadAsset);
+		L.RegFunction("GetPlatfromFoldername", GetPlatfromFoldername);
 		L.RegFunction("New", _CreateHotFix_Util);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("DataPath", get_DataPath, null);
@@ -51,7 +52,7 @@ public class HotFix_UtilWrap
 		try
 		{
 			ToLua.CheckArgsCount(L, 1);
-			string arg0 = ToLua.CheckString(L, 1);
+			object arg0 = ToLua.ToVarObject(L, 1);
 			HotFix.Util.Log(arg0);
 			return 0;
 		}
@@ -83,7 +84,7 @@ public class HotFix_UtilWrap
 		try
 		{
 			ToLua.CheckArgsCount(L, 1);
-			string arg0 = ToLua.CheckString(L, 1);
+			object arg0 = ToLua.ToVarObject(L, 1);
 			HotFix.Util.LogWarn(arg0);
 			return 0;
 		}
@@ -172,6 +173,22 @@ public class HotFix_UtilWrap
 			string arg1 = ToLua.CheckString(L, 2);
 			UnityEngine.GameObject o = HotFix.Util.LoadAsset(arg0, arg1);
 			ToLua.PushSealed(L, o);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int GetPlatfromFoldername(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 0);
+			string o = HotFix.Util.GetPlatfromFoldername();
+			LuaDLL.lua_pushstring(L, o);
 			return 1;
 		}
 		catch (Exception e)

@@ -9,6 +9,7 @@ public class HotFix_DownPanelWrap
 		L.BeginClass(typeof(HotFix.DownPanel), typeof(UnityEngine.MonoBehaviour));
 		L.RegFunction("SetProgressValue", SetProgressValue);
 		L.RegFunction("SetFileValue", SetFileValue);
+		L.RegFunction("GetTitle", GetTitle);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.EndClass();
@@ -38,6 +39,21 @@ public class HotFix_DownPanelWrap
 			ToLua.CheckArgsCount(L, 1);
 			string arg0 = ToLua.CheckString(L, 1);
 			HotFix.DownPanel.SetFileValue(arg0);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int GetTitle(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 0);
+			HotFix.DownPanel.GetTitle();
 			return 0;
 		}
 		catch (Exception e)

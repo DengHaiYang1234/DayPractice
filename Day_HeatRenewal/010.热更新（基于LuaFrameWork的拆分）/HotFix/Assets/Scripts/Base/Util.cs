@@ -35,19 +35,19 @@ namespace HotFix
             }
         }
 
-        public static void Log(string str)
+        public static void Log(object str)
         {
-            Debug.Log(str);
+            SDDebug.Log(str);
         }
 
         public static void LogErr(object str)
         {
-            Debug.LogError(str);
+            SDDebug.LogError(str);
         }
 
-        public static void LogWarn(string str)
+        public static void LogWarn(object str)
         {
-            Debug.LogWarning(str);
+            SDDebug.LogWarning(str);
         }
         /// <summary>
         /// 编写文件的MD5校验码
@@ -140,6 +140,7 @@ namespace HotFix
             try
             {
 #if UNITY_5
+                Util.LogErr("LoadAsset:" + name);
                 return bundle.LoadAsset(name, typeof (GameObject)) as GameObject;
 #else
                 return bundle.Load(name, typeof(GameObject)) as GameObject;

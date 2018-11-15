@@ -61,6 +61,8 @@ public class PackageBuild : MonoBehaviour
         BuildAssetsResource(target);
 
         Util.LogErr("PackageBild Is Success!!!");
+
+        AssetDatabase.Refresh();
     }
     #endregion
 
@@ -191,7 +193,7 @@ public class PackageBuild : MonoBehaviour
         info.UseShellExecute = isWin;
         info.ErrorDialog = true;
 
-        Util.Log(info.FileName + " " + info.Arguments);
+        SDDebug.Log(info.FileName + " " + info.Arguments);
 
         Process pro = Process.Start(info);
         pro.WaitForExit();
@@ -383,7 +385,7 @@ public class PackageBuild : MonoBehaviour
         {
             string file = files[i];
             Path.GetExtension(file);
-            if (file.EndsWith(".meta") || file.EndsWith(".mainfest"))
+            if (file.EndsWith(".meta") || file.EndsWith(".manifest"))
                 continue;
 
             string md5 = Util.MD5File(file);

@@ -76,6 +76,7 @@ namespace HotFix
         private AssetBundle LoadBundle(string path, bool isAsync = false)
         {
             string url = Util.DataPath + path.ToLower() + AppConst.BundleName;
+            Util.LogErr("url:" + url);
             byte[] stream = File.ReadAllBytes(url);
             AssetBundle bundle = null;
             if (isAsync)
@@ -83,6 +84,7 @@ namespace HotFix
             else
                 bundle = AssetBundle.LoadFromMemory(stream);
 
+            Util.LogErr("bundle:" + bundle);
             return bundle;
         }
 

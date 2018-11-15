@@ -16,9 +16,12 @@ public class LTDebugText : MonoBehaviour
     {
         isExpand = !isExpand;
         if (isExpand)
-            m_Text.text = condition + "\n" + stackTrace;
+        {
+            m_Text.text = condition + "\n" + "<color=#000000FF>" + stackTrace + "</color>" ;
+        }
         else
+        {
             m_Text.text = condition;
+        }
     }
-
 }

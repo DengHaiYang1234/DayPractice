@@ -24,11 +24,11 @@ namespace HotFix
         void CheckExtractResource()
         {
             bool isExists = Directory.Exists(Util.DataPath) && Directory.Exists(Util.DataPath + "lua/") && File.Exists(Util.DataPath + "files.txt");
-            //Util.LogErr("Util.DataPath:" + Util.DataPath);
+            Util.LogErr("Util.DataPath:" + Util.DataPath);
             //Util.LogErr("=====Directory.Exists(Util.DataPath):" + Directory.Exists(Util.DataPath));
             //Util.LogErr("=====Util.DataPath + lua:" + Util.DataPath + "lua/");
             //Util.LogErr("====Util.DataPath + files.txt:" + Util.DataPath + "files.txt");
-            //Util.LogErr("isExists:" + isExists);
+            Util.LogErr("isExists:" + isExists);
             //Util.LogErr("AppConst.DebugMode:" + AppConst.DebugMode);
             if (isExists || AppConst.DebugMode)
             {
@@ -41,7 +41,6 @@ namespace HotFix
 
         IEnumerator OnUpdateResource()
         {
-            
             downLoadFiles.Clear();
             if(!AppConst.UpdateMode)
             {
@@ -132,17 +131,14 @@ namespace HotFix
                     
                     //检验MD5是否匹配  匹配即不用更新.反之亦然
                     canUpdate = !remoteMD5.Equals(localMD5);
-                    
-                    if (canUpdate)
-                    {
-                        //Util.Log("================================================================");
-                        //Util.LogErr("====================localFile：" + localFile);
-                        ////url MD5
-                        //Util.LogErr("==========url MD5==========remoteMD5：" + remoteMD5);
-                        ////本地 MD5
-                        //Util.LogErr("==========本地 MD5==========localMD5：" + localMD5);
-                        //Util.Log("================================================================");
-                    }
+
+                    //Util.Log("================================================================");
+                    //Util.LogErr("====================localFile：" + localFile);
+                    ////url MD5
+                    //Util.LogErr("==========url MD5==========remoteMD5：" + remoteMD5);
+                    ////本地 MD5
+                    //Util.LogErr("==========本地 MD5==========localMD5：" + localMD5);
+                    //Util.Log("================================================================");
 
                     //若已检测到了两个MD5不同,那么删除本地文件.开始下载
                     if (canUpdate)
@@ -214,7 +210,7 @@ namespace HotFix
                          "                                100%";
             //DownPanel.SetProgressAndFile(updatePercent, updateWord);
             yield return new WaitForEndOfFrame();
-            Debug.LogError("更新完成!!!!!");
+            Util.LogErr("更新完成!!!!!");
 
             Initialize(OnResourceInited);
         }
@@ -236,7 +232,7 @@ namespace HotFix
                 File.Delete(outfile);
 
             string message = "正在解包文件：>files.txt";
-
+            Util.Log(message);
 
             if (Application.platform == RuntimePlatform.Android)
             {
@@ -247,8 +243,10 @@ namespace HotFix
                 yield return www;
 
                 if (www.isDone)
+                {
+                    //Util.LogErr("下载文件：" + www.bytes);
                     File.WriteAllBytes(outfile, www.bytes);
-
+                }
                 yield return 0;
             }
             else
@@ -268,7 +266,7 @@ namespace HotFix
                 outfile = dataPath + fs[0];
 
                 message = "正在解包文件:>" + fs[0];
-
+                //Util.Log(message);
 
                 string dir = Path.GetDirectoryName(outfile);
                 if (!Directory.Exists(dir))
@@ -288,10 +286,6 @@ namespace HotFix
                 {
                     if (File.Exists(outfile))
                         File.Delete(outfile);
-
-
-                    Util.LogErr("infile:" + infile);
-                    Util.LogErr("outfile:" + outfile);
                     File.Copy(infile, outfile, true);
                 }
 
@@ -301,7 +295,7 @@ namespace HotFix
                 yield return new WaitForEndOfFrame();
             }
 
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(1f);
 
             StartCoroutine(OnUpdateResource());
         }
@@ -310,13 +304,14 @@ namespace HotFix
         {
             string message = "更新失败：=======================<" + file + ">";
             //Debug.LogError(message);
+            Util.LogErr(message);
             return;
         }
 
         void OnUpdateMessageComplete(string message)
         {
             
-            Debug.LogError(message);
+            Util.LogErr(message);
             return;
         }
             
@@ -324,6 +319,7 @@ namespace HotFix
         {
             string message = "更新下载：=======================<" + file + ">";
             //Debug.LogError(message);
+            //Util.LogErr(message);
             return;
         }
 

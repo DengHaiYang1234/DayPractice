@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using HotFix;
 using System.IO;
+using UnityEngine.UI;
 
 public class LTDebugOutput : MonoBehaviour
 {
@@ -12,9 +13,7 @@ public class LTDebugOutput : MonoBehaviour
         public string Condition;
         public string StackTrace;
     }
-
     private bool _ShowDebugPanel = false;
-    
     private bool _hasInit = false;
     private string _outPutPath = null;
     private List<LogData> _printDebugTxt = new List<LogData>();
@@ -32,12 +31,14 @@ public class LTDebugOutput : MonoBehaviour
     public LTDebugText m_LogPrefab;
     [HeaderAttribute("开启线程接收")]
     public bool ThreadRecrive = false;
+    [HeaderAttribute("是否继续打印Log")]
     public bool isLoging = true;
+    [HeaderAttribute("暂停开始按钮")]
+    public Text m_StopButtonText;
 
     private void Awake()
     {
         Instance = this;
-
         UnityEngine.Debug.logger.filterLogType = LogType.Log;
         Application.logMessageReceived += Application_LogMessageReceived;
         Application.logMessageReceivedThreaded += Application_LogMessageReceivedThread;
@@ -69,7 +70,6 @@ public class LTDebugOutput : MonoBehaviour
         }
 
         SDDebug.Init(_outPutPath);
-
     }
 
     private void Update()
@@ -152,7 +152,6 @@ public class LTDebugOutput : MonoBehaviour
         DebugRootPanel.SetActive(_ShowDebugPanel);
     }
 
-
     private void AddLine(string msg, string stackTrace, Color color)
     {
         m_LogPrefab.m_Text.color = color;
@@ -163,6 +162,47 @@ public class LTDebugOutput : MonoBehaviour
         GameObject tempObj = GameObject.Instantiate(m_LogPrefab.gameObject);
         tempObj.transform.SetParent(m_LogPrefab.transform.parent, false);
         tempObj.SetActive(true);
+    }
+
+    private void AddLineThread(string msg,string stackTrace,Color color)
+    {
+        var data = new LogData() {Condition = msg, StackTrace = stackTrace, TextColor = color};
+        lock (_printDebugTxt) _printDebugTxt.Add(data);
+    }
+
+    public void OnClickClearLog()
+    {
+        ClearLog();
+        CloseLog();
+    }
+
+    private void ClearLog()
+    {
+        for (int i = 1; i < m_LogPrefab.transform.parent.childCount; ++i)
+            Destroy(m_LogPrefab.transform.parent.GetChild(i).gameObject);
+    }
+
+    public void OnClickCloseLog()
+    {
+        CloseLog();
+    }
+
+    public void OnClickStopLog()
+    {
+        isLoging = !isLoging;
+        m_StopButtonText.text = isLoging ? "暂停" : "继续";
+    }
+
+    public void OnClickOpenDebugButton()
+    {
+        Debug.LogError("m_LogPanel.gameObject.activeSelf:" + m_LogPanel.gameObject.activeSelf);
+        if (m_LogPanel.gameObject.activeSelf)
+            return;
+
+        ClearLog();
+        OnClickStopLog();
+        _ShowDebugPanel = !_ShowDebugPanel;
+        UpdateDebugPanelShow();
     }
 
 }
