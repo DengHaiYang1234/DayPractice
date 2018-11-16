@@ -1,0 +1,6 @@
+D:\C#\11.16(二叉树)\ConsoleApplication1\ConsoleApplication1\bin\Debug\ConsoleApplication1.exe.config
+D:\C#\11.16(二叉树)\ConsoleApplication1\ConsoleApplication1\bin\Debug\ConsoleApplication1.exe
+D:\C#\11.16(二叉树)\ConsoleApplication1\ConsoleApplication1\bin\Debug\ConsoleApplication1.pdb
+D:\C#\11.16(二叉树)\ConsoleApplication1\ConsoleApplication1\obj\Debug\ConsoleApplication1.csprojResolveAssemblyReference.cache
+D:\C#\11.16(二叉树)\ConsoleApplication1\ConsoleApplication1\obj\Debug\ConsoleApplication1.exe
+D:\C#\11.16(二叉树)\ConsoleApplication1\ConsoleApplication1\obj\Debug\ConsoleApplication1.pdb
