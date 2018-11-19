@@ -164,5 +164,281 @@ namespace ConsoleApplication1
             }
 
         }
+
+        public Node Min(Node root)
+        {
+            Node temp = root;
+            while (temp.Left != null)
+                temp = temp.Left;
+
+            return temp;
+        }
+
+        public Node Max(Node root)
+        {
+            Node temp = root;
+            while (temp.Right != null)
+                temp = temp.Right;
+            return temp;
+        }
+
+        public Node Find(int key)
+        {
+            Node temp = root;
+
+            while (temp.Data != key)
+            {
+                if (key < temp.Data)
+                    temp = temp.Left;
+                else
+                    temp = temp.Right;
+            }
+
+            return temp;
+        }
+
+        public int GetTotalNodeNum(Node root)
+        {
+            if (root == null)
+                return 0;
+
+            return GetTotalNodeNum(root.Left) + GetTotalNodeNum(root.Right) + 1;
+        }
+
+        public int Depth(Node root)
+        {
+            if (root == null)
+                return 0;
+
+            int left = Depth(root.Left);
+            int right = Depth(root.Right);
+
+            return left > right ? (left + 1) : (right + 1);
+        }
+
+        public int GetNodeNumBy_KLevel(int k, Node root)
+        {
+            if (root == null || k < 1)
+                return 0;
+
+            if (k == 1)
+                return 1;
+
+            //上一层节点的左节点开始
+            int left = GetNodeNumBy_KLevel(k - 1, root.Left);
+            //上一层节点的右节点开始
+            int right = GetNodeNumBy_KLevel(k - 1, root.Right);
+            return (left + right);
+        }
+
+        public void LevelTraverse(Node root)
+        {
+            Queue<Node> queue = new Queue<Node>();
+
+            Node temp = root;
+
+            queue.Enqueue(root);
+
+            while (queue.Count > 0)
+            {
+                temp = queue.Dequeue();
+                Console.WriteLine(temp.Data);
+
+                if (temp.Left != null)
+                {
+                    queue.Enqueue(temp.Left);
+                }
+                if(temp.Right != null)
+                {
+                    queue.Enqueue(temp.Right);
+                }
+            }
+
+        }
+
+        public static bool StructureCmp(Node root1,Node root2)
+        {
+            if (root1 == null || root2 == null)
+                return true;
+            else if (root1 == null || root2 == null)
+                return false;
+
+            bool resultLeft = StructureCmp(root1.Left, root2.Left);
+            bool resultRight = StructureCmp(root1.Right, root2.Right);
+
+            return (resultLeft && resultRight);
+        }
+
+        public bool IsAVL(Node root, out int height)
+        {
+            if (root == null)
+            {
+                height = 0;
+                return true;
+            }
+
+            int heightLeft;
+            bool resultLeft = IsAVL(root.Left, out heightLeft);
+            int heightRight;
+            bool resultRight = IsAVL(root.Right, out heightRight);
+
+            if (resultLeft && resultRight && Math.Abs(heightLeft - heightRight) <= 1)
+            {
+                height = Math.Max(heightLeft, heightRight) + 1;
+                return true;
+            }
+            else
+            {
+                height = Math.Max(heightLeft, heightRight) + 1;
+                return false;
+            }
+        }
+
+        public Node Mirror(Node root)
+        {
+            if (root == null)
+                return null;
+
+            Node left = Mirror(root.Left);
+            Node right = Mirror(root.Right);
+
+            root.Left = right;
+            root.Right = left;
+
+            return root;
+        }
+
+        public void Delete(int key)
+        {
+            Node currentNode = this.root;
+            Node parentNode = null;
+
+            //找到key对应的Node
+            while (key != currentNode.Data)
+            {
+                parentNode = currentNode;
+                if (key < currentNode.Data)
+                    currentNode = currentNode.Left;
+                else
+                    currentNode = currentNode.Right;
+
+                if (currentNode == null)
+                {
+                    Console.WriteLine("未找到该元素");
+                    return;
+                }
+            }
+
+            //第一种情况：该节点下不存在 left & right
+            if (currentNode.Left == null && currentNode.Right == null)
+            {
+                if (root == currentNode)
+                    root = null;
+                else if (parentNode.Left == currentNode)
+                    parentNode.Left = null;
+                else if (parentNode.Right == currentNode)
+                    parentNode.Right = null;
+            }
+            //第二种情况：该节点下存在 left ！= null
+            else if (currentNode.Left != null && currentNode.Right == null)
+            {
+                if (root == currentNode)
+                    root = currentNode.Left;
+                else if (parentNode.Left == currentNode)
+                    parentNode.Left = currentNode.Left;
+                else if (parentNode.Right == currentNode)
+                    parentNode.Right = currentNode.Left;
+            }
+            //第三种情况：该节点下存在 right != null
+            else if (currentNode.Right != null && currentNode.Left == null)
+            {
+                if (root == null)
+                    root = currentNode.Right;
+                else if (parentNode.Left == currentNode)
+                    parentNode.Left = currentNode.Right;
+                else if (parentNode.Right == currentNode)
+                    parentNode.Right = currentNode.Right;
+            }
+            //第四种情况：该节点下存在 left != null && right != null
+            else
+            {
+                Node succsessor = GetSuccessor(currentNode);
+                if (root == currentNode)
+                    root = succsessor;
+                else if (parentNode.Left == currentNode)
+                    parentNode.Left = succsessor;
+                else
+                    parentNode.Right = succsessor;
+
+                //最后将未连接的左节点赋值给当前节点
+                succsessor.Left = currentNode.Left;
+            }
+
+        }
+
+        /*从右开始，找到最小的值（successor）；将最小值的父节点（successorParent）的左节点赋空；在用最小值对应节点连接删除的右节点（即当前节点的父节点也行），
+         便可完成删除操作。*/
+        public Node GetSuccessor(Node delNode)
+        {
+            Node successorParent = delNode;
+            Node successor = delNode;
+
+            Node current = delNode.Right;
+
+            while (current != null)
+            {
+                successorParent = successor;
+                successor = current;
+                current = current.Left;
+            }
+
+            if (successor != null)
+            {
+                successorParent.Left = successor.Right;
+                successor.Right = delNode.Right;
+            }
+
+            return successor;
+        }
+
+        public static Node ConverBalanceTreeDoubleList(Node root)
+        {
+            if (root == null )
+                return null;
+
+            Node head = null;
+            Node current = root;
+            Node preTreeNode = null;
+
+            Stack<Node> stack = new Stack<Node>();
+            while (stack.Count != 0 || current != null)
+            {
+                while (current != null)
+                {
+                    stack.Push(current);
+                    current = current.Left;
+                }
+
+                if (stack.Count > 0)
+                {
+                    current = stack.Pop();
+
+                    //初始化头节点
+                    if (head == null)
+                        head = current;
+
+                    //串联后续节点
+                    if (preTreeNode != null)
+                        preTreeNode.Right = current;
+
+                    //定位到最后一个节点
+                    preTreeNode = current;
+                    //找下一个
+                    current = current.Right;
+                }
+            }
+
+            return head;
+        }
     }
 }

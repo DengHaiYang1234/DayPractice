@@ -29,11 +29,33 @@ namespace ConsoleApplication1
             //bst.PreSort(bst.root);
             //Console.WriteLine("\n" + "MidSort:");
             //bst.MidSort(bst.root);
-            Console.WriteLine("\n" + "LastSort: ");
-            bst.PostSort(bst.root);
+            //Console.WriteLine("\n" + "LastSort: ");
+            //bst.PostSort(bst.root);
 
-            Console.WriteLine("\n" + "PostSortByNoram: ");
-            bst.PostSortByNoram(bst.root);
+            //Console.WriteLine("\n" + "PostSortByNoram: ");
+            //bst.PostSortByNoram(bst.root);
+
+            //Console.WriteLine("Min：" + bst.Min(bst.root).Data);
+            //Console.WriteLine("Max：" + bst.Max(bst.root).Data);
+
+            //Console.WriteLine("Find：" + bst.Find(100).Data);
+
+            //Console.WriteLine("K:" + bst.GetNodeNumBy_KLevel(4,bst.root));
+
+            //bst.LevelTraverse(bst.root);
+
+            //int height;
+
+            //Console.WriteLine("IsAVL:" + bst.IsAVL(bst.root, out height));
+            //Console.WriteLine("height:" + height);
+
+            Node head = BinaryTree.ConverBalanceTreeDoubleList(bst.root);
+
+            while (head != null)
+            {
+                Console.WriteLine(head.Data);
+                head = head.Right;
+            }
         }
     }
 }
