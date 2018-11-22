@@ -84,38 +84,143 @@ namespace ConsoleApplication1
 
         public int IndexOf(StringDS str)
         {
-            int strLen = str.count;
-            int index = -1;
-            for (int i = 0; i < count; i++)
+            //int index = -1;
+            //int i = 0;
+            //int strLen = str.count;
+            ////可截取索引位置
+            //int subIndex = count - strLen + 1;
+
+            #region No.1
+            //while (i < subIndex)
+            //{
+            //    StringDS _str = Substring(i, strLen);
+
+            //    if (Compare(str, _str) != 0)
+            //        ++i;
+            //    else
+            //    {
+            //        index = i;
+            //        break;
+            //    }  
+            //}
+            #endregion
+            #region No.2
+            //while (i < count)
+            //{
+            //    while (i < count && this[i] != str[0])
+            //        i++;
+
+            //    int isEquals = -1;
+            //    if (this[i] != str[0])
+            //    {
+            //        StringDS _str = Substring(i, strLen);
+
+            //        isEquals = Compare(str, _str);
+            //    }
+
+            //    if (isEquals == 0)
+            //    {
+            //        index = i;
+            //        break;
+            //    }
+            //    else
+            //    {
+            //        i++;
+            //    }
+            //}
+            #endregion
+            #region No.3
+            //int strLen = str.count;
+            //int index = -1;
+            //for (int i = 0; i < count; i++)
+            //{
+            //    if (this[i] == str[0])
+            //    {
+            //        int surplusLen = count - i;
+            //        if (surplusLen >= strLen)
+            //        {
+            //            bool isEqual = true;
+            //            for (int j = 0; j < strLen; j++)
+            //            {
+            //                if (this[j + i] != str[j])
+            //                {
+            //                    isEqual = false;
+            //                    i = i - j + 1; //需要回溯
+            //                    continue;
+            //                }
+            //            }
+            //            if (isEqual)
+            //            {
+            //                index = i;
+            //                break;
+            //            }
+            //        }
+            //        else
+            //        {
+            //            return -1;
+            //        }
+            //    }
+            //}
+            #endregion
+
+            //return index;
+            #region No.4 标准KMP
+
+            //主字符串索引
+            int i = 0;
+            //匹配字符串索引
+            int j = 0;
+            //匹配字符串next数组
+            int[] next = GetIndex(str);
+
+            while (i < this.count && j < str.count)
             {
-                if (this[i] == str[0])
+                //不断进行匹配。不匹配就 使用匹配串的下一位置
+                if (j == -1 || this[i] == str[j])
                 {
-                    int surplusLen = count - i;
-                    if (surplusLen >= strLen)
-                    {
-                        bool isEqual = true;
-                        for (int j = 0; j < strLen; j++)
-                        {
-                            if (this[j + i] != str[j])
-                            {
-                                isEqual = false;
-                                continue;
-                            }
-                        }
-                        if (isEqual)
-                        {
-                            index = i;
-                            break;
-                        }
-                    }
-                    else
-                    {
-                        return -1;
-                    }
+                    i++;
+                    j++; //全部匹配成功。返回
+                }
+                else
+                {
+                    //若发现匹配串与主串 不匹配。匹配串就移动至一下位置
+                    j = next[j];
                 }
             }
 
-            return index;
+            //匹配成功
+            if (j == str.count)
+            {
+                return i - j;
+            }
+            else
+                return -1;
+            #endregion
+        }
+
+        public int[] GetIndex(StringDS str)
+        {
+            int[] next = new int[str.count]; //保存匹配字符串中的每个字符的下一移动位置的集合
+
+            next[0] = -1;
+            //字符索引
+            int j = 0;
+
+            //j对应的下一移动的位置
+            int k = -1;
+
+            while (j < str.count - 1)
+            {
+                //若匹配那么就直接移动到上一次出现该元素的位置.  若不匹配那么就返回初始位置
+                if (k == -1 || str[j] == str[k])  
+                {
+                    next[++j] = ++k;
+                }
+                else
+                    k = next[k]; //不匹配的时候。下一移动的位置
+            }
+
+            return next;
         }
 
         public StringDS Remove(int startIndex)
@@ -223,12 +328,12 @@ namespace ConsoleApplication1
 
         public StringDS Substring(int startIndex, int count)
         {
-            int len = startIndex + count;
+            int len = count;
             if (len < 0)
                 len = 0;
             char[] newChar = new char[len];
-            int lenght = startIndex + count;
-            for (int i = startIndex; i < lenght; i++)
+            int length = startIndex + count;
+            for (int i = startIndex; i < length; i++)
                 newChar[i - startIndex] = arr[i];
             return new StringDS(newChar);
         }

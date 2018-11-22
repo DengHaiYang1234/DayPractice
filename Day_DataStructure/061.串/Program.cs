@@ -20,13 +20,13 @@ namespace ConsoleApplication1
             //Console.WriteLine("String:" + string.Compare(ss1, ss2));
             #endregion
             #region IndexOf
-            //StringDS s1 = new StringDS("ssss123123as");
-            //StringDS s2 = new StringDS("123");
-            //Console.WriteLine("StringDS:" + s1.IndexOf(s2));
+            StringDS s1 = new StringDS("j2123");
+            StringDS s2 = new StringDS("123");
+            Console.WriteLine("StringDS:" + s1.IndexOf(s2));
 
-            //string ss1 = "ssss123123as";
-            //string ss2 = "123";
-            //Console.WriteLine("String:" + ss1.IndexOf(ss2));
+            string ss1 = "j2123";
+            string ss2 = "123";
+            Console.WriteLine("String:" + ss1.IndexOf(ss2));
             #endregion
             #region Remove
             //StringDS s1 = new StringDS("ssssqwe123fg");
@@ -45,20 +45,20 @@ namespace ConsoleApplication1
             //Console.WriteLine("String:" + ss1.Substring(1, 6));
             #endregion
             #region Split
-            StringDS s1 = new StringDS("ssssqwtyu67677678,");
-            StringDS[] dss = s1.Split(',');
+            //StringDS s1 = new StringDS("ssssqwtyu67677678,");
+            //StringDS[] dss = s1.Split(',');
 
-            foreach (var ds in dss)
-            {
-                Console.WriteLine(ds);
-            }
-            Console.WriteLine("------------------------");
-            string ss1 = "ssssqwtyu67677678,";
-            string[] sss = ss1.Split(',');
-            foreach (var ds in sss)
-            {
-                Console.WriteLine(ds);
-            }
+            //foreach (var ds in dss)
+            //{
+            //    Console.WriteLine(ds);
+            //}
+            //Console.WriteLine("------------------------");
+            //string ss1 = "ssssqwtyu67677678,";
+            //string[] sss = ss1.Split(',');
+            //foreach (var ds in sss)
+            //{
+            //    Console.WriteLine(ds);
+            //}
             #endregion
         }
     }
