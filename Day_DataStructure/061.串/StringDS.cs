@@ -198,6 +198,7 @@ namespace ConsoleApplication1
             #endregion
         }
 
+        //参考 https://www.cnblogs.com/yjiyjige/p/3263858.html
         public int[] GetIndex(StringDS str)
         {
             int[] next = new int[str.count]; //保存匹配字符串中的每个字符的下一移动位置的集合
@@ -212,9 +213,17 @@ namespace ConsoleApplication1
             while (j < str.count - 1)
             {
                 //若匹配那么就直接移动到上一次出现该元素的位置.  若不匹配那么就返回初始位置
-                if (k == -1 || str[j] == str[k])  
+                if (k == -1 || str[j] == str[k])
                 {
-                    next[++j] = ++k;
+                    ++j;
+                    ++k;
+                    if (str[j] != str[k])
+                    {
+                        next[j] = k;
+                    }
+                    else
+                        next[j] = next[k];  //若出现大量重复。只需返回最初的值即可 参考大话数据结构 p143
+
                 }
                 else
                     k = next[k]; //不匹配的时候。下一移动的位置
