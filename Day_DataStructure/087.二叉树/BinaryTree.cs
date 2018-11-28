@@ -54,7 +54,6 @@ namespace project
             }
         }
 
-
         public void PreSort(Node root)
         {
             if (root == null)
@@ -178,5 +177,195 @@ namespace project
             }
 
         }
+
+        public int Min()
+        {
+            Node temp = root;
+            while (temp.Left != null)
+                temp = temp.Left;
+
+            return temp.Data;
+        }
+
+        public int Max()
+        {
+            Node temp = root;
+            while (temp.Right != null)
+                temp = temp.Right;
+
+            return temp.Data;
+        }
+
+        public int GetTotalNodeNum(Node root)
+        {
+            if (root == null)
+                return 0;
+
+            int left = GetTotalNodeNum(root.Left);
+            int right = GetTotalNodeNum(root.Right);
+
+            return left + right + 1;
+        }
+
+
+        public int Depth(Node root)
+        {
+            if (root == null)
+                return 0;
+
+            int left = Depth(root.Left);
+            int right = Depth(root.Right);
+
+            return left > right ? (left + 1) : (right + 1);
+        }
+
+        public int GetNodeNumBy_KLevel(int k,Node root)
+        {
+            if (root == null || k < 1)
+                return 0;
+
+            if (k == 1)
+                return 1;
+
+            int left = GetNodeNumBy_KLevel(k - 1, root.Left);
+            int right = GetNodeNumBy_KLevel(k - 1, root.Right);
+
+            return left + right;
+        }
+
+
+        public void Delete(int value)
+        {
+            Node currentNode = root;
+            Node parentNode = null;
+
+            while (currentNode.Data !=  value)
+            {
+                parentNode = currentNode;
+                if (value < currentNode.Data)
+                    currentNode = currentNode.Left;
+                else
+                    currentNode = currentNode.Right;
+
+
+                if (currentNode == null)
+                {
+                    Console.WriteLine("为找到");
+                    return;
+                }
+            }
+
+            if (currentNode.Left == null && currentNode.Right == null)
+            {
+                if (root == currentNode)
+                    root = null;
+                else if (parentNode.Left == currentNode)
+                    parentNode.Left = null;
+                else
+                    parentNode.Right = null;
+            }
+            else if (currentNode.Left != null && currentNode.Right == null)
+            {
+                if (root == currentNode)
+                    root = currentNode.Left;
+                else if (parentNode.Left == currentNode)
+                    parentNode.Left = currentNode.Left;
+                else
+                    parentNode.Right = currentNode.Left;
+            }
+            else if (currentNode.Right != null && currentNode.Left == null)
+            {
+                if (root == currentNode)
+                    root = currentNode.Right;
+                else if (parentNode.Left == currentNode)
+                    parentNode.Left = currentNode.Right;
+                else
+                    parentNode.Right = currentNode.Right;
+            }
+            else
+            {
+                Node successor = GetScuuessor(currentNode);
+                if (root == currentNode)
+                    root = successor;
+                else if (parentNode.Left == currentNode)
+                    parentNode.Left = successor;
+                else
+                    parentNode.Right = successor;
+
+                successor.Left = currentNode.Left;
+            }
+
+        }
+
+        public Node GetScuuessor(Node delNode)
+        {
+            Node successorParent = delNode;
+           
+            Node successor = delNode;
+
+            Node currentNode = delNode.Right;
+
+            while (currentNode != null)
+            {
+                successorParent = successor;
+                successor = currentNode;
+                currentNode = currentNode.Left;
+            }
+
+            if (successor != null)
+            {
+                successorParent.Left = successor.Right;
+                successor.Right = delNode.Right;
+            }
+
+            return successor;
+        }
+
+
+        public static Node ConverBalanceTreeDoubleList(Node root)
+        {
+            if (root == null)
+                return null;
+
+            Node head = null;
+            Node current = root;
+            Node parentNode = null;
+
+            Stack<Node> stack = new Stack<Node>();
+            while (stack.Count > 0 || current != null)
+            {
+                while (current != null)
+                {
+                    stack.Push(current);
+                    current = current.Left;
+                }
+
+
+                if (stack.Count > 0)
+                {
+                    current = stack.Pop();
+
+                    if (head == null)
+                        head = current;
+
+                    if (parentNode != null)
+                        parentNode.Right = current;
+
+                    parentNode = current;
+
+                    current = current.Right;
+                }
+            }
+            return head;
+        }
+        
+             
+
+
+
+
+
+
+
     }
 }

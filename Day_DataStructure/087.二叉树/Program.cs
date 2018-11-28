@@ -42,9 +42,31 @@ namespace project
             //bst.PostSortByNoram(bst.root);
 
 
-            Console.WriteLine("-----------------层序遍历------------------");
-            Console.WriteLine("\n" + "SeqSort");
-            bst.SequenceSort(bst.root);
+            //Console.WriteLine("-----------------层序遍历------------------");
+            //Console.WriteLine("\n" + "SeqSort");
+            //bst.SequenceSort(bst.root);
+
+
+            //Console.WriteLine(bst.Max());
+            //Console.WriteLine(bst.Min());
+
+            //Console.WriteLine("TotalNode:" + bst.GetTotalNodeNum(bst.root));
+
+            //Console.WriteLine("GetNodeNumBy_KLevel:" + bst.GetNodeNumBy_KLevel(3,bst.root));
+            //bst.Delete(25);
+            //Console.WriteLine("-----------------层序遍历------------------");
+            //Console.WriteLine("\n" + "SeqSort");
+            //bst.SequenceSort(bst.root);
+
+
+            //Node head = BinaryTree.ConverBalanceTreeDoubleList(bst.root);
+
+            //while (head != null)
+            //{
+            //    Console.WriteLine(head.Data);
+            //    head = head.Right;
+            //}
+
         }
     }
 }
