@@ -18,7 +18,7 @@ namespace ConsoleApplication1
             Push(3);
             Push(4);
             Push(5);
-            Console.WriteLine("=====================");
+            Console.WriteLine("==============================");
             Pop();
             Pop();
         }
