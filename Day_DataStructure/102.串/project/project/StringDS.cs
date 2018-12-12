@@ -170,5 +170,68 @@ namespace project
 
             return -1;
         }
+
+        public int IndexOfByKMP(StringDS s)
+        {
+            int i = 0;
+            int j = 0;
+
+            int[] next = GetNext(s);
+
+            while (i < Length && j < s.Length)
+            {
+                if (j == -1 || this[i] == s[j])
+                {
+                    i++;
+                    j++;
+                }
+                else
+                {
+                    j = next[j];
+                }
+            }
+
+            if (j == s.Length)
+            {
+                return i - j;
+            }
+
+            return -1;
+        }
+
+        /// <summary>
+        /// 获取匹配串的Next
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public int[] GetNext(StringDS s)
+        {
+            int i = 0;
+            int j = -1;
+            int[] next = new int[Length];
+            next[0] = -1;
+            while (i < Length - 1 && j < s.Length - 1)
+            {
+                if (j == -1 || this[i] == s[j])
+                {
+                    i++;
+                    j++;
+                    if (this[i] != s[j])
+                    {
+                        next[i] = j;
+                    }
+                    else
+                    {
+                        next[i] = next[j];
+                    }
+                }
+                else
+                {
+                    j = next[j]; //j值回溯
+                }
+            }
+
+            return next;
+        }
     }
 }
