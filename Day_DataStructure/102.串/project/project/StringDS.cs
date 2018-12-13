@@ -17,7 +17,7 @@ namespace project
 
         public StringDS() : this(10)
         {
-            
+
         }
 
         public StringDS(string str)
@@ -53,7 +53,7 @@ namespace project
             return new string(arr);
         }
 
-        public static int Compare(StringDS s1,StringDS s2)
+        public static int Compare(StringDS s1, StringDS s2)
         {
             int len = s1.Length > s2.Length ? s2.Length : s1.Length;
             int index = -1;
@@ -106,7 +106,7 @@ namespace project
             return new StringDS(newChar);
         }
 
-        public StringDS Substring(int index,int count)
+        public StringDS Substring(int index, int count)
         {
             char[] newChar = new char[count];
 
@@ -232,6 +232,101 @@ namespace project
             }
 
             return next;
+        }
+
+        public int LastIndexOf(StringDS s)
+        {
+            return IndexOfByKMP(s, true);
+        }
+
+        public int IndexOfByKMP(StringDS s, bool isLast)
+        {
+            List<int> list = new List<int>();
+            int i = 0;
+            int j = 0;
+            int[] next = GetNext(s);
+
+            while (i < Length && j < s.Length)
+            {
+                if (j == -1 || this[i] == s[j])
+                {
+                    i++;
+                    j++;
+                    if (isLast)
+                    {
+                        if (j == s.Length)
+                        {
+                            list.Add(i - j);
+                            j = 0;
+                            continue;
+                        }
+                    }
+                }
+                else
+                {
+                    j = next[j];
+                }
+            }
+
+            if (list.Count > 0)
+            {
+                return list[list.Count - 1];
+            }
+
+            return -1;
+        }
+
+        public StringDS Reversal(StringDS str)
+        {
+            Stack<char> stack = new Stack<char>();
+            for (int i = 0; i < str.Length; i++)
+                stack.Push(str[i]);
+
+            char[] newChar = new char[str.Length];
+
+            for (int i = 0; i < str.Length; i++)
+                newChar[i] = stack.Pop();
+
+            return new StringDS(newChar);
+        }
+
+        public StringDS[] Split(char separator)
+        {
+            List<int> separatorIndexList = new List<int>();
+            for (int i = 0; i < Length; i++)
+            {
+                if (this[i].Equals(separator))
+                {
+                    separatorIndexList.Add(i);
+                }
+            }
+
+            if (separatorIndexList.Count <= 0)
+            {
+                Console.WriteLine(" Split is Called , But Dont Find separator");
+                return null;
+            }
+
+            StringDS[] sds = new StringDS[separatorIndexList.Count + 1];
+
+            int sdsIndex = 0;
+            int frontIndex = separatorIndexList[sdsIndex];
+            sds[sdsIndex] = Substring(0, frontIndex);
+
+            sdsIndex++;
+
+            for (int i = 1; i < separatorIndexList.Count; i++)
+            {
+                int startIndex = separatorIndexList[i - 1] + 1;
+                int count = separatorIndexList[i] - startIndex;
+                sds[sdsIndex] = Substring(startIndex, count);
+                sdsIndex++;
+            }
+
+            int rearIndex = separatorIndexList[separatorIndexList.Count - 1] + 1;
+            sds[sdsIndex] = Substring(rearIndex);
+
+            return sds;
         }
     }
 }

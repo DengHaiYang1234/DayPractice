@@ -10,13 +10,14 @@ namespace project
     {
         static void Main(string[] args)
         {
-            string a = "3231";
+            string a = "3231/a/s/////";
             string b = "23";
-            Console.WriteLine(a.IndexOf(b));
+            Console.WriteLine(a.LastIndexOf('/'));
 
-            StringDS sd1 = new StringDS("3231");
-            StringDS sd2 = new StringDS("23");
-            Console.WriteLine(sd1.IndexOfByKMP(sd2));
+
+            StringDS sd1 = new StringDS("3231/a/s/////");
+            StringDS sd2 = new StringDS("/");
+            Console.WriteLine(sd1.LastIndexOf(sd2));
         }
     }
 }
