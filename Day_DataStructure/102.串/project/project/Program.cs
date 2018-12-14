@@ -12,12 +12,12 @@ namespace project
         {
             string a = "3231/a/s/////";
             string b = "23";
-            Console.WriteLine(a.LastIndexOf('/'));
-
+            
+            
 
             StringDS sd1 = new StringDS("3231/a/s/////");
             StringDS sd2 = new StringDS("/");
-            Console.WriteLine(sd1.LastIndexOf(sd2));
+            Console.WriteLine(sd1.Replace('/', 'u'));
         }
     }
 }

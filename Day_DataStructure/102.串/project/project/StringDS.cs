@@ -276,6 +276,35 @@ namespace project
             return -1;
         }
 
+        public List<int> AllIndexOf(StringDS s)
+        {
+            List<int> list = new List<int>();
+            int i = 0;
+            int j = 0;
+            int[] next = GetNext(s);
+
+            while (i < Length && j < s.Length)
+            {
+                if (j == -1 || this[i] == s[j])
+                {
+                    i++;
+                    j++;
+                    if (j == s.Length)
+                    {
+                        list.Add(i - j);
+                        j = 0;
+                        continue;
+                    }
+                }
+                else
+                {
+                    j = next[j];
+                }
+            }
+
+            return list;
+        }
+
         public StringDS Reversal(StringDS str)
         {
             Stack<char> stack = new Stack<char>();
@@ -327,6 +356,57 @@ namespace project
             sds[sdsIndex] = Substring(rearIndex);
 
             return sds;
+        }
+
+        public StringDS Replace(char oldChar, char newChar)
+        {
+            char[] newChars = arr;
+            for (int i = 0; i < Length; i++)
+            {
+                if (newChars[i].Equals(oldChar))
+                {
+                    newChars[i] = newChar;
+                }
+            }
+            return new StringDS(newChars);
+        }
+
+        public StringDS Remove(int index)
+        {
+            char[] newChar = new char[index];
+            for (int i = 0; i < index; i++)
+            {
+                newChar[i] = this[i];
+            }
+
+            return new StringDS(newChar);
+        }
+
+        public StringDS Remove(int index,int count)
+        {
+            int len = Length - count;
+            char[] newChar = new char[len];
+            StringDS sds_1 = Substring(0, index - 1);
+            StringDS sds_2 = Substring(index + count);
+            return Concat(sds_1, sds_2);
+        }
+
+        public StringDS Concat(StringDS s1,StringDS s2)
+        {
+            char[] newChar = new char[s1.Length + s2.Length];
+            for (int i = 0; i < s1.Length + s2.Length; i++)
+            {
+                if (i < s1.Length)
+                {
+                    newChar[i] = s1[i];
+                }
+                else if(i >= s1.Length && i < s2.Length)
+                {
+                    newChar[i] = s2[i - s1.Length];
+                }
+            }
+
+            return new StringDS(newChar);
         }
     }
 }
