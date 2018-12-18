@@ -146,5 +146,135 @@ namespace project
                 }
             }
         }
+
+        public Node ConversionToDoubleLinkList(Node root)
+        {
+            Node head = null;
+            Node parent = null;
+            Node curr = root;
+            Stack<Node> stack = new Stack<Node>();
+            while (curr != null || stack.Count > 0)
+            {
+                if (curr != null)
+                {
+                    stack.Push(curr);
+                    curr = curr.Left;
+                }
+                else
+                {
+                    if (stack.Count > 0)
+                    {
+                        curr = stack.Pop();
+
+                        if (head == null)
+                        {
+                            head = curr;
+                        }
+
+                        if (parent != null)
+                            parent.Right = curr;
+
+                        parent = curr;
+                        curr = curr.Right;
+                    }
+                }
+            }
+
+            return head;
+        }
+
+        public void Delete(int value)
+        {
+            Node current = root;
+            Node parent = null;
+
+            while (value != current.Data)
+            {
+                parent = current;
+                if (value < current.Data)
+                {
+                    current = current.Left;
+                }
+                else
+                {
+                    current = current.Right;
+                }
+
+                if (current == null)
+                {
+                    Console.WriteLine("未找到有效的值");
+                    break;
+                }
+            }
+
+            if (current != null)
+            {
+                if (current.Left == null && current.Right == null) //单个
+                {
+                    if (current == root)
+                    {
+                        root = null;
+                    }
+                    else if (parent.Left == current)
+                        parent.Left = null;
+                    else
+                        parent.Right = null;
+                }
+                else if (current.Left != null && current.Right == null) //单左
+                {
+                    if (current == root)
+                    {
+                        root = current.Left;
+                    }
+                    else if (parent.Left == current)
+                        parent.Left = current.Left;
+                    else
+                        parent.Right = current.Right;
+                }
+                else if (current.Right != null && current.Left == null) //单右
+                {
+                    if (current == root)
+                        root = current.Right;
+                    else if (parent.Left == current)
+                        parent.Left = current.Right;
+                    else
+                        parent.Right = current.Right;
+                }
+                else if (current.Left != null && current.Right != null)
+                {
+                    Node successor = GetScuuessor(current);
+                    if (root == current)
+                        root = successor;
+                    else if (parent.Left == current)
+                        parent.Left = successor;
+                    else
+                        parent.Right = successor;
+
+                    successor.Left = current.Left;
+                }
+            }
+        }
+
+        public Node GetScuuessor(Node delNode)
+        {
+            Node successorParent = delNode;
+            Node successor = delNode;
+            Node currentNode = delNode.Right;
+
+            while(currentNode != null)
+            {
+                successorParent = successor;
+                successor = currentNode;
+                currentNode = currentNode.Left;
+            }
+
+            if (successor != null)
+            {
+                successorParent.Left = successor.Right;
+                successor.Right = delNode.Right;
+            }
+
+            return successor;
+        }
     }
 }
