@@ -34,15 +34,18 @@ namespace project
             //bst.PostSort(bst.root);
 
 
-            bst.Delete(4);
+            //bst.Delete(4);
 
             Console.WriteLine("-----------------非递归------------------");
             //Console.WriteLine("\n" + "PreOrder: ");
             //bst.PreSortByNoram(bst.root);
-            Console.WriteLine("\n" + "MidSort:");
-            bst.MidSortByNoram(bst.root);
+            //Console.WriteLine("\n" + "MidSort:");
+            //bst.MidSortByNoram(bst.root);
             //Console.WriteLine("\n" + "LastSort: ");
             //bst.PostSortByNoram(bst.root);
+
+            Console.WriteLine("\n" + "SequenceSort: ");
+            bst.SequenceSort(bst.root);
 
 
             //Node head = null;

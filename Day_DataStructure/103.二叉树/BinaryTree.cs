@@ -80,6 +80,24 @@ namespace project
             Console.WriteLine(root.Data);
         }
 
+        public void SequenceSort(Node root)
+        {
+            Queue<Node> queue = new Queue<Node>();
+            Node currentNode = root;
+            queue.Enqueue(root);
+            while (queue.Count > 0)
+            {
+                currentNode = queue.Dequeue();
+                Console.WriteLine(currentNode.Data);
+
+                if (currentNode.Left != null)
+                    queue.Enqueue(currentNode.Left);
+
+                if (currentNode.Right != null)
+                    queue.Enqueue(currentNode.Right);
+            }
+        }
+
         public void PreSortByNoram(Node root)
         {
             Stack<Node> stack = new Stack<Node>();
@@ -145,6 +163,68 @@ namespace project
                         stack.Push(current.Left);
                 }
             }
+        }
+
+        public int Min(Node root)
+        {
+            Node currentNode = root;
+            while (currentNode.Left != null)
+            {
+                currentNode = currentNode.Left;
+            }
+            return currentNode.Data;
+        }
+
+        public int Max()
+        {
+            Node currentNode = root;
+            while (currentNode.Right != null)
+            {
+                currentNode = currentNode.Right;
+            }
+            return currentNode.Data;
+        }
+
+        public int GetTotalNodeNum(Node root)
+        {
+            if (root == null)
+            {
+                return 0;
+            }
+
+            int left = GetTotalNodeNum(root.Left);
+            int right = GetTotalNodeNum(root.Right);
+
+            return left + right + 1;
+        }
+
+        public int Depth(Node root)
+        {
+            if (root == null)
+                return 0;
+
+            int left = Depth(root.Left);
+            int right = Depth(root.Right);
+
+            return left > right ? (left + 1) : (right + 1);
+        }
+
+        public int GetNodeNumBy_KLevel(int k ,Node root)
+        {
+            if (root == null || k < 1)
+            {
+                return 0;
+            }
+
+            if (k == 1)
+            {
+                return 1;
+            }
+
+            int left = GetNodeNumBy_KLevel(k - 1, root.Left);
+            int right = GetNodeNumBy_KLevel(k - 1, root.Right);
+
+            return left + right;
         }
 
         public Node ConversionToDoubleLinkList(Node root)
