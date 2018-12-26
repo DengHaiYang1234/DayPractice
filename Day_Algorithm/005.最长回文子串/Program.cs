@@ -10,7 +10,7 @@ namespace project
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("最长回文：" + LongestPalindrome_1("sdsdsdsdsdsdsd"));
+            Console.WriteLine("最长回文：" + LongestPalindrome_manacher("aasaaddddddsssssdddddd"));
         }
 
         //O（n^3）
@@ -94,6 +94,56 @@ namespace project
 
             return s.Substring(startIndex, maxLen);
         }
+
+
+        //manacher  O（n）
+        static string LongestPalindrome_manacher(string s)
+        {
+            StringBuilder sb = new StringBuilder("^");
+            for (int i = 0; i < s.Length; i++)
+            {
+                sb.Append("#").Append(s[i]);
+            }
+
+            sb.Append("#$");
+
+            int c = 0;
+            int r = 0;
+            int len = sb.Length;
+            int centerIndex = 0;
+            int maxLen = 0;
+
+            int[] p = new int[len];
+
+            for (int i = 1; i < len - 1; i++)
+            {
+                int iMirror = 2*c - i;
+
+                p[i] = r > i ? Math.Min(r - i, p[iMirror]) : 0;
+
+                while (i + p[i] < len && i - p[i] > 0 &&  sb[i - 1 - p[i]] == sb[i + 1 + p[i]])
+                {
+                    p[i]++;
+                }
+
+                if (i + p[i] > r)
+                {
+                    c = i;
+                    r = i + p[i];
+                }
+
+                if (p[i] > maxLen)
+                {
+                    maxLen = p[i];
+                    centerIndex = i;
+                }
+            }
+            return s.Substring((centerIndex - 1 - maxLen) / 2);
+        }
+
+
+
+
 
     }
 }
