@@ -21,7 +21,9 @@ namespace project
             Enqueue(1);
             Enqueue(10);
             Enqueue(15);
+            Enqueue(16);
             Console.WriteLine("=======================================================");
+            Dequeue();
             Dequeue();
             Dequeue();
             Dequeue();
@@ -40,23 +42,16 @@ namespace project
 
         static int Dequeue()
         {
-            while (stack_1.Count > 1)
+            while (stack_1.Count > 0)
             {
                 stack_2.Push(stack_1.Pop());
             }
 
-            if (stack_1.Count > 0)
+            if (stack_2.Count > 0)
             {
-                
-                int value = stack_1.Pop();
-                Console.WriteLine("出队：" +value);
+                Console.WriteLine("出队：" + stack_2.Peek());
+                return stack_2.Pop();
             }
-            
-            while (stack_2.Count > 0)
-            {
-                stack_1.Push(stack_2.Pop());
-            }
-
             return -1;
 
         }
