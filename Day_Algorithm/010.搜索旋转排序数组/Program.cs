@@ -27,7 +27,7 @@ namespace project
         {
             int[] nums = new int[] {4, 5, 6, 7, 0, 1, 2};
 
-            int index = Search(nums,2);
+            int index = BinarySearch(nums,2);
             Console.WriteLine(index);
         }
 
@@ -59,6 +59,28 @@ namespace project
                 }
             }
             return -1;
+        }
+
+        public static int BinarySearch(int[] arr, int target)
+        {
+            int left = 0;
+            int right = arr.Length - 1;
+
+            while (left <= right)
+            {
+                int mid = (left + right)/2;
+                if (arr[mid] == target)
+                    return mid;
+
+                if (target > arr[mid])
+                {
+                    left = mid + 1;
+                }
+                else
+                {
+                    right = mid - 1;
+                }
+            }
         }
     }
 }
