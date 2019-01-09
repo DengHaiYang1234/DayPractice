@@ -47,7 +47,7 @@ namespace ConsoleApplication1
                         parent.Right = newNode;
                         break;
                     }
-                        
+
                 }
             }
         }
@@ -152,6 +152,158 @@ namespace ConsoleApplication1
                         stack.Push(current.Left);
                 }
             }
+        }
+
+        public void SequenceSort(Node root)
+        {
+            Queue<Node> queue = new Queue<Node>();
+            Node currentNode = root;
+            queue.Enqueue(currentNode);
+
+            while (queue.Count > 0)
+            {
+                currentNode = queue.Dequeue();
+                Console.WriteLine(currentNode.Data);
+
+                if (currentNode.Left != null)
+                    queue.Enqueue(currentNode.Left);
+
+                if (currentNode.Right != null)
+                    queue.Enqueue(currentNode.Right);
+            }
+        }
+
+        public void Delete(int value)
+        {
+            Node current = root;
+            Node parent = null;
+
+            while (current.Data != value)
+            {
+                parent = current;
+                if (value < current.Data)
+                    current = current.Left;
+                else
+                    current = current.Right;
+
+                if (current == null)
+                {
+                    Console.WriteLine("Not Found!");
+                    break;
+                }
+            }
+
+            if (current != null)
+            {
+                if (current.Left == null && current.Right != null)
+                {
+                    if (root == current)
+                        root = null;
+                    else
+                    {
+                        if (parent.Left == current)
+                            parent.Left = null;
+                        else
+                            parent.Right = null;
+                    }
+                }
+                else if (current.Left != null && current.Right == null)
+                {
+                    if (root == current)
+                        root = current.Left;
+                    else
+                    {
+                        if (parent.Left == current)
+                            parent.Left = current.Left;
+                        else
+                            parent.Right = current.Left;
+                    }
+                }
+                else if (current.Left == null && current.Right != null)
+                {
+                    if (root == current)
+                        root = current.Right;
+                    else
+                    {
+                        if (parent.Left == current)
+                            parent.Left = current.Right;
+                        else
+                            parent.Right = current.Right;
+                    }
+                }
+                else //有双节点
+                {
+                    Node successor = SuccessorNode(current); //取得右枝丫
+                    if (root == current)
+                        root = successor;
+                    else
+                    {
+                        if (parent.Left == current)
+                            parent.Left = successor;
+                        else
+                            parent.Right = successor;
+                    }
+                    successor.Left = current.Left;
+                }
+            }
+        }
+
+        public Node SuccessorNode(Node delNode) //处理节点下还有双节点的特殊情况
+        {
+            Node successorParent = delNode; //存放右枝丫较大数值节点
+            Node successorNode = delNode; //存放右枝丫最小的值节点
+            Node current = delNode.Right;
+
+            while (current != null)//找到右枝丫最小的值
+            {
+                successorParent = successorNode;
+                successorNode = current;
+                current = current.Left;
+            }
+
+            if (successorNode != null)
+            {
+                successorParent.Left = successorNode.Right; //若还有右最下的节点。那么赋值给successorParent
+                successorNode.Right = delNode.Right; //将删除节点的右节点放置当前节点的右节点
+            }
+
+            return successorNode;
+        }
+
+        public Node ConversionToLinkList(Node root)
+        {
+            Node current = root;
+            Stack<Node> stack = new Stack<Node>();
+            Node head = null;
+            Node temp = null;
+
+            while (current != null || stack.Count > 0)
+            {
+                while (current != null)
+                {
+                    stack.Push(current);
+                    current = current.Left;
+                }
+
+                if (stack.Count > 0)
+                {
+                    current = stack.Pop();
+
+                    if (head == null)
+                    {
+                        head = current;
+                    }
+
+                    if (temp != null)
+                    {
+                        temp.Right = current;
+                    }
+                    temp = current;
+                    current = current.Right;
+                }
+            }
+
+            return head;
         }
     }
 }

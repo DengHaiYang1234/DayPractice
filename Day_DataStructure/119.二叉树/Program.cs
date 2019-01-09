@@ -33,13 +33,33 @@ namespace ConsoleApplication1
             //Console.WriteLine("\n" + "PostSort: ");
             //bst.PostSort(bst.root);
 
-            Console.WriteLine("-----------------非递归------------------");
+            //Console.WriteLine("-----------------非递归------------------");
             //Console.WriteLine("\n" + "PreOrder: ");
             //bst.PreSortByNoram(bst.root);
             //Console.WriteLine("\n" + "MidSort:");
             //bst.MidSortByNoram(bst.root);
             //Console.WriteLine("\n" + "LastSort: ");
             //bst.PostSortByNoram(bst.root);
+
+
+            //Console.WriteLine("-----------------层序------------------");
+            //bst.SequenceSort(bst.root);.
+
+
+            //Console.WriteLine("-----------------删除------------------");
+            //bst.Delete(25);
+            //Console.WriteLine("\n" + "LastSort:");
+            //bst.PostSortByNoram(bst.root);
+
+            Console.WriteLine("-----------------转换链表------------------");
+            Node head =  bst.ConversionToLinkList(bst.root);
+
+
+            while (head != null)
+            {
+                Console.WriteLine(head.Data);
+                head = head.Right;
+            }
         }
     }
 }
