@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "project_3", "project\project_3.csproj", "{BE644057-951C-4543-8A0A-690C4A88F4AF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prokect_1", "Prokect_1\Prokect_1.csproj", "{59FD5424-2F93-4644-A17C-3730FF55257A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project_2(猫和老鼠)", "Project_2\Project_2(猫和老鼠).csproj", "{C3659AAA-E35E-4CA3-90A5-118B1B4DE10C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "使用委托和事件解决加减乘除", "使用委托和事件解决加减乘除\使用委托和事件解决加减乘除.csproj", "{CFE8E7C7-0B2A-40F3-8090-38821CFBE0DF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QQ空间发布说说", "QQ空间发布说说\QQ空间发布说说.csproj", "{056E7C5F-3AB8-4A7B-8C15-68F777E6ADB6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BE644057-951C-4543-8A0A-690C4A88F4AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE644057-951C-4543-8A0A-690C4A88F4AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE644057-951C-4543-8A0A-690C4A88F4AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE644057-951C-4543-8A0A-690C4A88F4AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59FD5424-2F93-4644-A17C-3730FF55257A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59FD5424-2F93-4644-A17C-3730FF55257A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59FD5424-2F93-4644-A17C-3730FF55257A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59FD5424-2F93-4644-A17C-3730FF55257A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3659AAA-E35E-4CA3-90A5-118B1B4DE10C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3659AAA-E35E-4CA3-90A5-118B1B4DE10C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3659AAA-E35E-4CA3-90A5-118B1B4DE10C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3659AAA-E35E-4CA3-90A5-118B1B4DE10C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CFE8E7C7-0B2A-40F3-8090-38821CFBE0DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFE8E7C7-0B2A-40F3-8090-38821CFBE0DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFE8E7C7-0B2A-40F3-8090-38821CFBE0DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFE8E7C7-0B2A-40F3-8090-38821CFBE0DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{056E7C5F-3AB8-4A7B-8C15-68F777E6ADB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{056E7C5F-3AB8-4A7B-8C15-68F777E6ADB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{056E7C5F-3AB8-4A7B-8C15-68F777E6ADB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{056E7C5F-3AB8-4A7B-8C15-68F777E6ADB6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,7 @@
+D:\C#\1.23(委托)\project\project\bin\Debug\project.exe.config
+D:\C#\1.23(委托和事件)\project\project\bin\Debug\project.exe.config
+D:\C#\1.23(委托和事件)\project\project\bin\Debug\project.exe
+D:\C#\1.23(委托和事件)\project\project\bin\Debug\project.pdb
+D:\C#\1.23(委托和事件)\project\project\obj\Debug\project.csprojResolveAssemblyReference.cache
+D:\C#\1.23(委托和事件)\project\project\obj\Debug\project.exe
+D:\C#\1.23(委托和事件)\project\project\obj\Debug\project.pdb

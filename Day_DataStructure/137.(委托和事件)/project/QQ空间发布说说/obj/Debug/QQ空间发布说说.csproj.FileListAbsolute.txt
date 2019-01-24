@@ -1,0 +1,6 @@
+D:\C#\1.23(委托和事件)\project\QQ空间发布说说\bin\Debug\QQ空间发布说说.exe.config
+D:\C#\1.23(委托和事件)\project\QQ空间发布说说\bin\Debug\QQ空间发布说说.exe
+D:\C#\1.23(委托和事件)\project\QQ空间发布说说\bin\Debug\QQ空间发布说说.pdb
+D:\C#\1.23(委托和事件)\project\QQ空间发布说说\obj\Debug\QQ空间发布说说.csprojResolveAssemblyReference.cache
+D:\C#\1.23(委托和事件)\project\QQ空间发布说说\obj\Debug\QQ空间发布说说.exe
+D:\C#\1.23(委托和事件)\project\QQ空间发布说说\obj\Debug\QQ空间发布说说.pdb

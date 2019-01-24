@@ -1,0 +1,5 @@
+D:\C#\1.23(委托和事件)\project\Project_2\bin\Debug\Project_2.exe.config
+D:\C#\1.23(委托和事件)\project\Project_2\bin\Debug\Project_2.exe
+D:\C#\1.23(委托和事件)\project\Project_2\bin\Debug\Project_2.pdb
+D:\C#\1.23(委托和事件)\project\Project_2\obj\Debug\Project_2.exe
+D:\C#\1.23(委托和事件)\project\Project_2\obj\Debug\Project_2.pdb
