@@ -1,0 +1,4 @@
+sceneSetups:
+- path: Assets/Scenens/04_CharacterAni.unity
+  isLoaded: 1
+  isActive: 1
